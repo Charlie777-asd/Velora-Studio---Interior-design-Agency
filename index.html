@@ -1,0 +1,2778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velora Studio — Bespoke Luxury Interior Architecture</title>
+<meta name="description" content="Velora Studio crafts timeless luxury interiors for private residences, penthouses, coastal villas and sanctuary estates rendered in travertine marble, patinated brass and ambient light.">
+
+<!-- Fonts (FEMININE LUXURY CURVY BOLD TYPOGRAPHY) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italianno&family=Bodoni+Moda:ital,opsz,wght@1,6..96,400..900&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;600;700&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+/* ============================================================
+   FEMININE LUXURY DESIGN TOKENS & SYSTEM
+============================================================ */
+:root {
+  --white:        #FAFAF8;
+  --ivory:        #F6F2EA;
+  --linen:        #EFE9DF;
+  --charcoal:     #0B0A08;
+  --charcoal2:    #141310;
+  --charcoal3:    #1D1C18;
+  --gold:         #C9A96A;
+  --gold-deep:    #D4AF37;
+  --gold-bright:  #F5E6C8;
+  --gold-shimmer: #FFF2D4;
+  --gold-light:   rgba(212, 175, 55, 0.15);
+  --gold-line:    rgba(212, 175, 55, 0.28);
+  --curvy:        'Italianno', 'Bodoni Moda', 'Playfair Display', serif;
+  --serif:        'Bodoni Moda', 'Playfair Display', 'Cormorant Garamond', serif;
+  --display:      'Cormorant Garamond', serif;
+  --cinzel:       'Cinzel', serif;
+  --sans:         'Inter', -apple-system, sans-serif;
+  --ease:         cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ULTRA-LUXURY SURFACES & COMPONENTS */
+.scroll-progress-bar {
+  position: fixed; top: 0; left: 0; height: 2.5px; width: 0%;
+  background: linear-gradient(90deg, var(--gold-deep), var(--gold-bright), #FFFFFF);
+  z-index: 100000; box-shadow: 0 0 10px var(--gold-bright); pointer-events: none;
+  transition: width 0.08s linear;
+}
+
+
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--charcoal); color-scheme: dark; }
+body {
+  background: var(--charcoal);
+  color: var(--white);
+  font-family: var(--sans);
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--gold-deep); color: #000; }
+img { display: block; max-width: 100%; height: auto; }
+a   { color: inherit; text-decoration: none; }
+section { position: relative; width: 100%; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--charcoal); }
+::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.35); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-deep); }
+
+/* PRELOADER WITH MULTILINGUAL TEXT SWITCHER */
+#preloader {
+  position: fixed; inset: 0; z-index: 100000; background: var(--charcoal);
+  display: flex; align-items: center; justify-content: center; flex-direction: column;
+}
+.pl-logo-wrap { height: 50px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; text-align: center; }
+.pl-logo {
+  font-family: var(--serif); font-style: italic; font-weight: 500;
+  font-size: clamp(18px, 2.4vw, 28px); color: var(--gold-bright);
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+  letter-spacing: 0.08em; transition: opacity 0.25s var(--ease), filter 0.25s var(--ease);
+}
+.pl-line { width: 280px; height: 2px; background: rgba(255, 255, 255, 0.1); position: relative; overflow: hidden; border-radius: 1px; }
+.pl-line span { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: linear-gradient(90deg, transparent, var(--gold-deep), var(--gold-bright), transparent); box-shadow: 0 0 10px var(--gold-bright); }
+.pl-count { margin-top: 16px; font-family: var(--sans); font-size: 11px; letter-spacing: 0.25em; color: rgba(255, 255, 255, 0.5); font-weight: 300; }
+
+/* REFINED SMALLER FLOATING NAVBAR */
+header.nav {
+  position: absolute; top: 0; left: 0; width: 100%; z-index: 5000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 28px 6vw; background: transparent; border: none; box-shadow: none;
+  transition: all 0.4s var(--ease);
+}
+header.nav.scrolled {
+  position: fixed; background: rgba(11, 10, 8, 0.94);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  padding: 16px 6vw; border-bottom: 1px solid rgba(212, 175, 55, 0.22);
+}
+.nav-brand { display: flex; flex-direction: column; gap: 0px; cursor: pointer; }
+.nav-logo  { font-family: var(--curvy); font-style: italic; font-weight: 700; font-size: 26px; color: #fff; line-height: 1; text-shadow: 0 0 15px rgba(0,0,0,0.8); }
+.nav-sub   { font-family: var(--sans); font-size: 7.5px; letter-spacing: 0.55em; text-transform: uppercase; color: var(--gold-deep); font-weight: 400; }
+
+nav.links  { display: flex; gap: 28px; }
+nav.links a {
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255, 255, 255, 0.9);
+  position: relative; padding-bottom: 4px; transition: color 0.3s; text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+nav.links a::after {
+  content: ''; position: absolute; left: 0; bottom: 0; width: 0; height: 1px;
+  background: var(--gold-deep); transition: width 0.4s var(--ease);
+}
+nav.links a:hover { color: var(--gold-bright); }
+nav.links a:hover::after { width: 100%; }
+
+.nav-actions { display: flex; align-items: center; gap: 16px; }
+.nav-cta {
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; padding: 9px 18px;
+  border: 1px solid var(--gold-line); color: rgba(255, 255, 255, 0.95); border-radius: 1px;
+  background: rgba(14, 13, 11, 0.4); backdrop-filter: blur(10px);
+  transition: background 0.3s, border-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+.nav-cta:hover { background: var(--gold-deep); border-color: var(--gold-deep); color: #000; box-shadow: 0 4px 20px rgba(212, 175, 55, 0.35); }
+@media (max-width: 1080px) {
+  nav.links { gap: 14px; overflow-x: auto; max-width: 55vw; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+  nav.links::-webkit-scrollbar { display: none; }
+  nav.links a { font-size: 8px; }
+}
+
+/* GRAND HERO LANDING SECTION WITH UNCLIPPED BIGGER STUDIO TEXT */
+.hero { height: 100vh; min-height: 650px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: flex-start; }
+.hero-bg { position: absolute; inset: 0; z-index: 0; }
+.hero-bg img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.92) contrast(1.05); }
+.hero-scrim {
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(11,10,8,0.82) 0%, rgba(11,10,8,0.42) 45%, rgba(11,10,8,0) 80%),
+    linear-gradient(180deg, rgba(11,10,8,0.4) 0%, rgba(11,10,8,0) 50%, rgba(11,10,8,0.7) 100%);
+}
+
+.hero-main-title-box {
+  position: absolute; top: 50%; left: 6vw; transform: translateY(-50%);
+  z-index: 3; width: auto; max-width: 92vw; text-align: left; pointer-events: none;
+  overflow: visible;
+}
+.hero-brand-title {
+  font-family: 'Italianno', 'Bodoni Moda', 'Playfair Display', serif;
+  font-style: italic; font-weight: 700;
+  font-size: clamp(95px, 16vw, 230px); line-height: 0.85;
+  text-transform: capitalize; color: #FFFFFF;
+  text-shadow: 0 0 50px rgba(255, 255, 255, 0.55); margin: 0;
+  letter-spacing: -0.01em; overflow: visible;
+  padding-right: 50px;
+}
+.gold-shimmer-text {
+  font-family: 'Italianno', 'Bodoni Moda', serif;
+  font-style: italic; font-weight: 700;
+  font-size: 1.18em;
+  line-height: 0.82;
+  background: linear-gradient(135deg, #FFF2D4 0%, #D4AF37 50%, #F5E6C8 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  display: block; text-shadow: none; filter: drop-shadow(0 0 50px rgba(212, 175, 55, 0.65));
+  padding-right: 60px;
+  margin-right: -60px;
+  overflow: visible;
+}
+
+.hero-bottom-bar { position: absolute; bottom: 0; left: 0; right: 0; z-index: 3; display: flex; align-items: center; justify-content: flex-start; padding: 0 6vw 28px; }
+.hero-scroll-label { display: flex; align-items: center; gap: 18px; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+.hero-scroll-label .vline { width: 1px; height: 36px; background: rgba(255,255,255,0.25); position: relative; overflow: hidden; }
+.hero-scroll-label .vline span { position: absolute; top: -100%; left: 0; width: 100%; height: 100%; background: var(--gold-deep); animation: scanLine 2.4s ease-in-out infinite; }
+@keyframes scanLine { 0%{top:-100%;} 50%{top:0%;} 100%{top:100%;} }
+
+/* EYEBROW GENERAL */
+.eyebrow {
+  font-family: var(--sans); font-size: 10px; letter-spacing: 0.36em; text-transform: uppercase; color: var(--gold-deep); font-weight: 400; display: inline-flex; align-items: center; gap: 16px;
+}
+.eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--gold-deep); display: inline-block; }
+
+/* JOURNEY HORIZONTAL SCROLL WITH AESTHETIC PAINTING BACKDROP */
+.journey-wrap { background: var(--charcoal3); position: relative; }
+.journey-intro-box {
+  position: relative; width: 100%; min-height: 480px; display: flex; align-items: center; justify-content: center;
+  padding: 90px 6vw 60px; background: url('designs/woman_painting_velora.png') center/cover no-repeat;
+  overflow: hidden; border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+}
+.journey-intro-scrim {
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    radial-gradient(circle at center, rgba(14, 13, 11, 0.55) 0%, rgba(11, 10, 8, 0.94) 100%),
+    linear-gradient(180deg, rgba(11,10,8,0.85) 0%, rgba(11,10,8,0.6) 50%, rgba(11,10,8,0.95) 100%);
+  backdrop-filter: blur(12px) brightness(0.65) contrast(1.1);
+  -webkit-backdrop-filter: blur(12px) brightness(0.65) contrast(1.1);
+}
+.journey-intro {
+  position: relative; z-index: 2; color: var(--white);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; margin: 0 auto; max-width: 940px; gap: 20px;
+  background: rgba(18, 17, 14, 0.72); border: 1px solid rgba(212, 175, 55, 0.35);
+  padding: 55px 50px; border-radius: 4px; backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px); box-shadow: 0 25px 70px rgba(0,0,0,0.8), inset 0 0 35px rgba(212,175,55,0.08);
+}
+.journey-intro-left h3 {
+  font-family: var(--serif); font-style: italic; font-size: clamp(32px, 4.5vw, 62px);
+  font-weight: 300; line-height: 1.15; margin-top: 10px; text-align: center; color: var(--white);
+  text-shadow: 0 4px 25px rgba(0,0,0,0.8);
+}
+.journey-intro-right p {
+  font-size: 15px; color: rgba(255,255,255,0.85); max-width: 580px; line-height: 1.85;
+  font-weight: 300; text-align: center; margin: 0 auto; text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+.journey-pin   { height: 100vh; overflow: hidden; position: relative; }
+.journey-track { position: absolute; top: 0; left: 0; height: 100%; display: flex; will-change: transform; padding: 0 6vw; gap: 2.5vw; }
+.journey-card  { position: relative; width: 38vw; min-width: 360px; height: 66vh; margin-top: 17vh; flex: 0 0 auto; overflow: hidden; border-radius: 2px; cursor: pointer; border: 1px solid rgba(212, 175, 55, 0.2); }
+.journey-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.journey-card:hover img { transform: scale(1.07); }
+.journey-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(11,10,8,0.85) 0%, transparent 60%); }
+.journey-tag { position: absolute; left: 28px; bottom: 28px; color: #fff; z-index: 2; }
+.journey-tag .num  { font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--gold-bright); display: block; margin-bottom: 6px; }
+.journey-tag .name { font-family: var(--serif); font-style: italic; font-size: 28px; font-weight: 400; line-height: 1.1; }
+.journey-card-btn {
+  position: absolute; right: 24px; bottom: 28px; z-index: 3; background: rgba(212, 175, 55, 0.2); border: 1px solid var(--gold-line);
+  color: var(--gold-bright); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; padding: 8px 16px; border-radius: 1px; backdrop-filter: blur(4px);
+  opacity: 0; transform: translateY(10px); transition: opacity 0.3s, transform 0.3s;
+}
+.journey-card:hover .journey-card-btn { opacity: 1; transform: translateY(0); }
+
+/* PROJECTS SECTION */
+#projects { background: var(--charcoal); }
+.project-header { padding: 10vh 6vw 5vh; }
+.project-header .eyebrow { margin-bottom: 20px; }
+.project-header h2 { font-family: var(--serif); font-style: italic; font-size: clamp(38px, 6vw, 88px); font-weight: 300; line-height: 1.0; color: var(--white); }
+.project { display: flex; align-items: center; padding: 8vh 6vw; gap: 6vw; border-top: 1px solid rgba(212,175,55,0.12); }
+.project.reverse { flex-direction: row-reverse; }
+.project-media { flex: 1 1 55%; position: relative; height: 75vh; min-height: 480px; overflow: hidden; border-radius: 2px; cursor: pointer; border: 1px solid rgba(212,175,55,0.15); }
+.project-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); }
+.project-media:hover img { transform: scale(1.05); }
+.proj-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(11,10,8,0.6) 100%); }
+.project-num { position: absolute; top: 28px; right: 28px; z-index: 2; font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--gold-bright); background: rgba(11,10,8,0.5); padding: 4px 12px; border: 1px solid var(--gold-line); }
+.project-info { flex: 1 1 39%; }
+.project-info .eyebrow { margin-bottom: 24px; }
+.project-info h3 { font-family: var(--serif); font-style: italic; font-size: clamp(36px, 4.4vw, 70px); font-weight: 400; line-height: 1.02; margin-bottom: 22px; color: var(--white); }
+.project-info p { font-size: 14px; line-height: 1.85; color: rgba(255,255,255,0.58); font-weight: 300; max-width: 440px; margin-bottom: 38px; }
+.project-meta { display: flex; gap: 36px; flex-wrap: wrap; margin-bottom: 44px; }
+.project-meta .label { display: block; font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 6px; }
+.project-meta .val { font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--white); }
+
+/* BUTTONS */
+.btn {
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; padding: 14px 32px; border-radius: 1px;
+  display: inline-flex; align-items: center; gap: 12px; white-space: nowrap; cursor: pointer; border: none; font-family: var(--sans);
+  transition: all 0.3s var(--ease);
+}
+.btn-outline-gold { border: 1px solid var(--gold-line); color: var(--gold-deep); background: transparent; }
+.btn-outline-gold:hover { background: var(--gold-deep); color: #000; border-color: var(--gold-deep); box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25); }
+.btn-gold { background: var(--gold-deep); color: #000; font-weight: 500; }
+.btn-gold:hover { background: var(--gold-bright); box-shadow: 0 4px 24px rgba(243, 229, 171, 0.35); }
+@media (max-width: 960px) { .project, .project.reverse { flex-direction: column; padding: 7vh 6vw; } .project-media { width: 100%; height: 50vh; min-height: 320px; } }
+
+/* BEFORE / AFTER INTERACTIVE RENOVATION SLIDER (CUSTOM ULTRA-AESTHETIC COMPONENT) */
+.ba-section { padding: 10vh 6vw; background: var(--charcoal2); text-align: center; border-top: 1px solid rgba(212, 175, 55, 0.1); border-bottom: 1px solid rgba(212, 175, 55, 0.1); }
+.ba-eyebrow { justify-content: center; margin-bottom: 18px; }
+.ba-section h3 { font-family: var(--serif); font-style: italic; font-size: clamp(30px, 4.2vw, 56px); margin-bottom: 50px; font-weight: 300; color: var(--white); }
+.ba-slider { position: relative; max-width: 1140px; margin: 0 auto; height: 66vh; min-height: 440px; overflow: hidden; border-radius: 4px; cursor: ew-resize; border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 25px 80px rgba(0,0,0,0.85); }
+.ba-slider img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; user-select: none; pointer-events: none; }
+.ba-after { z-index: 1; }
+.ba-before-wrap { position: absolute; inset: 0; z-index: 2; overflow: hidden; width: 50%; border-right: 2px solid var(--gold-bright); }
+.ba-before-wrap img { width: 100%; height: 100%; object-fit: cover; position: absolute; left: 0; top: 0; }
+
+.ba-custom-handle {
+  position: absolute; top: 0; left: 50%; height: 100%; width: 4px;
+  background: linear-gradient(180deg, transparent 0%, var(--gold-bright) 15%, var(--gold-deep) 50%, var(--gold-bright) 85%, transparent 100%);
+  z-index: 10; transform: translateX(-50%); pointer-events: none;
+  filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.8));
+}
+.ba-handle-badge {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 78px; height: 78px; border-radius: 50%;
+  background: rgba(14, 13, 11, 0.92); border: 2px solid var(--gold-bright);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.6), inset 0 0 20px rgba(212, 175, 55, 0.25);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.ba-slider:hover .ba-handle-badge, .ba-slider.dragging .ba-handle-badge {
+  transform: translate(-50%, -50%) scale(1.15);
+  box-shadow: 0 0 50px rgba(212, 175, 55, 0.9), inset 0 0 25px rgba(212, 175, 55, 0.4);
+}
+.ba-badge-inner {
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  color: var(--gold-bright); font-size: 10px; font-weight: 600; letter-spacing: 0.18em; font-family: var(--sans);
+}
+.ba-arrow { font-size: 16px; color: var(--gold-bright); font-weight: 700; line-height: 1; animation: pulseArrow 1.5s infinite alternate; }
+@keyframes pulseArrow { 0% { opacity: 0.5; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1.1); } }
+
+.ba-moving-tag {
+  position: absolute; top: 28px; white-space: nowrap; pointer-events: none;
+  font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+  padding: 8px 16px; border-radius: 2px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.75); transition: opacity 0.15s var(--ease); z-index: 12;
+}
+.ba-moving-tag-before {
+  right: 52px; background: rgba(14, 13, 11, 0.92); border: 1px solid rgba(255, 255, 255, 0.35);
+  color: var(--white); text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+.ba-moving-tag-after {
+  left: 52px; background: rgba(14, 13, 11, 0.92); border: 1px solid var(--gold-line);
+  color: var(--gold-bright); text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+@media (max-width: 768px) {
+  .ba-moving-tag { font-size: 8px; padding: 6px 10px; letter-spacing: 0.14em; top: 16px; }
+  .ba-moving-tag-before { right: 44px; }
+  .ba-moving-tag-after { left: 44px; }
+}
+
+/* FEATURED INTERIOR COLLECTION (3D WAVE FLIP GALLERY SHOWCASE) */
+.collections-section {
+  padding: 12vh 6vw; background: var(--charcoal); position: relative; overflow: hidden;
+  border-top: 1px solid rgba(212, 175, 55, 0.15); border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+.col-bg-texture {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0.035;
+  background-image:
+    linear-gradient(90deg, rgba(212, 175, 55, 0.5) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(212, 175, 55, 0.5) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.col-bg-glow {
+  position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); width: 80vw; height: 50vh;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.07) 0%, transparent 70%);
+  pointer-events: none; filter: blur(80px);
+}
+.col-header {
+  display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 44px;
+  flex-wrap: wrap; gap: 24px; position: relative; z-index: 2;
+}
+.col-header-info h2 {
+  font-family: var(--serif); font-style: italic; font-size: clamp(34px, 5vw, 68px);
+  font-weight: 300; line-height: 1.05; color: var(--white); margin-top: 12px;
+}
+.col-controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.col-badge {
+  font-family: var(--cinzel); font-size: 11px; letter-spacing: 0.25em; color: var(--gold-bright);
+  background: rgba(212, 175, 55, 0.08); border: 1px solid var(--gold-line); padding: 8px 18px; border-radius: 1px;
+  backdrop-filter: blur(10px);
+}
+.col-nav-btn {
+  background: transparent; border: 1px solid rgba(212, 175, 55, 0.22); color: rgba(255, 255, 255, 0.7);
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; padding: 8px 14px; border-radius: 1px;
+  cursor: pointer; transition: all 0.3s var(--ease); font-family: var(--sans);
+}
+.col-nav-btn:hover, .col-nav-btn.active {
+  background: var(--gold-deep); color: #000; border-color: var(--gold-deep); box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+}
+
+/* GRID & 3D CARDS */
+.col-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+  position: relative; z-index: 2; perspective: 1400px;
+}
+.col-card {
+  position: relative; height: 310px; border-radius: 3px; cursor: pointer;
+  perspective: 1200px; transform-style: preserve-3d;
+}
+.col-card-inner {
+  position: relative; width: 100%; height: 100%; border-radius: 3px;
+  transform-style: preserve-3d; transition: border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  border: 1px solid rgba(212, 175, 55, 0.22); background: rgba(18, 17, 14, 0.85);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6); overflow: hidden;
+}
+.col-card:hover .col-card-inner {
+  border-color: var(--gold-bright);
+  box-shadow: 0 20px 50px rgba(212, 175, 55, 0.35), 0 0 25px rgba(212, 175, 55, 0.15);
+}
+.col-card-img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.8s var(--ease), filter 0.6s var(--ease);
+  filter: brightness(0.9) contrast(1.04);
+}
+.col-card:hover .col-card-img {
+  transform: scale(1.07); filter: brightness(1.02) contrast(1.08);
+}
+.col-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(11,10,8,0) 20%, rgba(11,10,8,0.4) 60%, rgba(11,10,8,0.92) 100%);
+  opacity: 0.85; transition: opacity 0.4s var(--ease);
+}
+.col-card:hover .col-card-overlay { opacity: 0.95; }
+
+.col-card-details {
+  position: absolute; left: 24px; bottom: 22px; right: 24px; z-index: 3; color: #fff;
+  transform: translateY(12px); opacity: 0; transition: transform 0.4s var(--ease), opacity 0.4s var(--ease);
+}
+.col-card:hover .col-card-details {
+  transform: translateY(0); opacity: 1;
+}
+.col-card-tag {
+  font-family: var(--sans); font-size: 8.5px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold-bright); margin-bottom: 6px; display: block; font-weight: 500;
+}
+.col-card-title {
+  font-family: var(--serif); font-style: italic; font-size: 22px; font-weight: 400; line-height: 1.15;
+  color: #fff; margin-bottom: 8px; text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+.col-card-meta {
+  display: flex; gap: 16px; font-size: 11px; color: rgba(255,255,255,0.65); font-weight: 300;
+}
+.col-card-meta span { display: flex; align-items: center; gap: 4px; }
+.col-card-meta span strong { color: var(--gold-deep); font-weight: 400; }
+
+.col-glass-shimmer {
+  position: absolute; inset: 0; pointer-events: none; z-index: 4;
+  background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 40%, rgba(212,175,55,0.15) 100%);
+  opacity: 0.4; transition: opacity 0.4s;
+}
+.col-card:hover .col-glass-shimmer { opacity: 0.8; }
+
+.col-flip-sweep {
+  position: absolute; inset: 0; pointer-events: none; z-index: 5; opacity: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(245, 230, 200, 0.4) 50%, transparent 100%);
+}
+
+@media (max-width: 1080px) {
+  .col-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .col-card { height: 260px; }
+}
+@media (max-width: 768px) {
+  .col-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .col-card { height: 230px; }
+  .col-card-details { opacity: 1; transform: translateY(0); left: 16px; bottom: 16px; right: 16px; }
+  .col-card-title { font-size: 18px; }
+}
+
+/* REALISTIC PAPER TEAR REVEAL REVIEW EXPERIENCE */
+.reviews-section {
+  position: relative; width: 100%; background: #0E0D0B; overflow: hidden;
+  border-top: 1px solid rgba(212, 175, 55, 0.15); border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+.rev-bg-grid {
+  position: absolute; inset: 0; pointer-events: none; z-index: 1; opacity: 0.04;
+  background-image:
+    linear-gradient(to right, rgba(212,175,55,0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(212,175,55,0.4) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+.rev-bg-glow {
+  position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%); width: 70vw; height: 60vh;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(14, 13, 11, 0) 70%);
+  pointer-events: none; z-index: 1; filter: blur(60px);
+}
+
+.reviews-pin-container {
+  position: relative; width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 60px 6vw; z-index: 2;
+}
+
+.reviews-layout {
+  width: 100%; max-width: 1560px; height: 82vh; min-height: 560px;
+  display: grid; grid-template-columns: 42% 58%; gap: 5vw; align-items: center; position: relative;
+}
+
+.rev-left-panel {
+  display: flex; flex-direction: column; justify-content: space-between; height: 100%; padding: 20px 0;
+  position: relative; z-index: 5;
+}
+.rev-eyebrow-wrap { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.rev-counter-badge {
+  font-family: var(--cinzel); font-size: 11px; letter-spacing: 0.3em; color: var(--gold-bright);
+  background: rgba(212, 175, 55, 0.1); border: 1px solid var(--gold-line); padding: 6px 14px; border-radius: 1px;
+}
+
+.rev-quote-icon {
+  font-family: var(--serif); font-style: italic; font-size: 72px; line-height: 0.8; color: var(--gold-deep); opacity: 0.35; margin-bottom: 16px;
+}
+.rev-stars { color: var(--gold-bright); font-size: 15px; letter-spacing: 5px; margin-bottom: 16px; }
+
+.rev-title {
+  font-family: var(--serif); font-style: italic; font-size: clamp(26px, 3.2vw, 48px); font-weight: 300; line-height: 1.12; color: var(--white);
+  margin-bottom: 20px; transition: transform 0.4s var(--ease), opacity 0.4s var(--ease);
+}
+.rev-title em { font-style: italic; color: var(--gold-bright); font-family: var(--display); }
+
+.rev-desc {
+  font-size: clamp(13px, 1.1vw, 16px); line-height: 1.85; color: rgba(255, 255, 255, 0.68); font-weight: 300; margin-bottom: 30px;
+  max-width: 520px; transition: transform 0.4s var(--ease), opacity 0.4s var(--ease);
+}
+
+.rev-divider { width: 60px; height: 1px; background: var(--gold-deep); margin-bottom: 24px; }
+
+.rev-meta-block { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
+.rev-avatar { width: 54px; height: 54px; border-radius: 50%; object-fit: cover; border: 1px solid var(--gold-deep); box-shadow: 0 0 15px rgba(212,175,55,0.25); }
+.rev-client-name { font-family: var(--serif); font-style: italic; font-size: 20px; font-weight: 400; color: #fff; }
+.rev-client-sub { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-bright); margin-top: 2px; }
+
+.rev-stats-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); margin-bottom: 28px;
+}
+.rev-stat .lbl { font-size: 8px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.4); display: block; margin-bottom: 4px; }
+.rev-stat .val { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--white); }
+
+.rev-right-stage {
+  position: relative; width: 100%; height: 100%; perspective: 1800px; transform-style: preserve-3d;
+  border: 1px solid rgba(212, 175, 55, 0.25); border-radius: 3px; overflow: hidden; background: #141310;
+  box-shadow: 0 25px 70px rgba(0,0,0,0.85);
+}
+.rev-stage-inner { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+.rev-under-layer { position: absolute; inset: 0; z-index: 1; opacity: 1; transition: transform 0.8s var(--ease); }
+.rev-under-layer img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.95) contrast(1.05); }
+
+.rev-tear-layer {
+  position: absolute; inset: 0; z-index: 10; pointer-events: none; transform-style: preserve-3d;
+}
+.tear-half {
+  position: absolute; inset: 0; width: 100%; height: 100%; backface-visibility: hidden; will-change: transform, opacity;
+}
+.tear-half img { width: 100%; height: 100%; object-fit: cover; }
+
+/* HIGH REALISM PAPER TEAR MASK WITH MULTIPLE JAGGED RIP TEETH & FIBER OUTLINE */
+.tear-half-left {
+  clip-path: polygon(0% 0%, 53% 0%, 47% 8%, 56% 16%, 44% 24%, 58% 33%, 45% 42%, 57% 51%, 43% 61%, 56% 72%, 46% 82%, 54% 91%, 48% 100%, 0% 100%);
+  -webkit-clip-path: polygon(0% 0%, 53% 0%, 47% 8%, 56% 16%, 44% 24%, 58% 33%, 45% 42%, 57% 51%, 43% 61%, 56% 72%, 46% 82%, 54% 91%, 48% 100%, 0% 100%);
+  filter: drop-shadow(5px 0 15px rgba(0,0,0,0.9));
+}
+.tear-half-right {
+  clip-path: polygon(53% 0%, 100% 0%, 100% 100%, 48% 100%, 54% 91%, 46% 82%, 56% 72%, 43% 61%, 57% 51%, 45% 42%, 58% 33%, 44% 24%, 56% 16%, 47% 8%);
+  -webkit-clip-path: polygon(53% 0%, 100% 0%, 100% 100%, 48% 100%, 54% 91%, 46% 82%, 56% 72%, 43% 61%, 57% 51%, 45% 42%, 58% 33%, 44% 24%, 56% 16%, 47% 8%);
+  filter: drop-shadow(-5px 0 15px rgba(0,0,0,0.9));
+}
+
+.rev-nav-dots { display: flex; gap: 8px; align-items: center; margin-top: 14px; }
+.rev-dot { width: 24px; height: 2px; background: rgba(255,255,255,0.2); transition: background 0.4s, width 0.4s; }
+.rev-dot.active { background: var(--gold-bright); width: 44px; }
+
+/* ESTIMATOR CURRENCY TOGGLE STYLES */
+.est-curr-toggle { display: flex; gap: 10px; justify-content: center; margin-bottom: 24px; }
+.est-curr-btn {
+  background: rgba(255, 255, 255, 0.05); border: 1px solid var(--gold-line); color: rgba(255, 255, 255, 0.7);
+  font-size: 11px; letter-spacing: 0.15em; font-family: var(--sans); font-weight: 500;
+  padding: 8px 18px; cursor: pointer; border-radius: 2px; transition: all 0.3s var(--ease);
+}
+.est-curr-btn.active, .est-curr-btn:hover {
+  background: var(--gold-deep); color: #000; border-color: var(--gold-deep); box-shadow: 0 4px 15px rgba(212,175,55,0.3);
+}
+
+@media (max-width: 1024px) {
+  .reviews-layout { grid-template-columns: 1fr; height: auto; gap: 40px; }
+  .reviews-pin-container { height: auto; min-height: 100vh; padding: 80px 5vw; }
+  .rev-right-stage { height: 440px; }
+}
+
+/* MATERIAL LIBRARY WITH CATEGORY FILTERS */
+.materials { padding: 10vh 6vw; background: var(--charcoal); }
+.mat-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; gap: 40px; flex-wrap: wrap; }
+.mat-head h3 { font-family: var(--serif); font-style: italic; font-size: clamp(30px, 4.2vw, 56px); font-weight: 300; margin-top: 16px; color: var(--white); }
+.mat-head p { max-width: 360px; font-size: 13px; color: rgba(255,255,255,0.48); font-weight: 300; line-height: 1.8; }
+.mat-filters { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px; }
+.mat-filter-btn {
+  background: transparent; border: 1px solid rgba(255, 255, 255, 0.15); color: rgba(255, 255, 255, 0.7);
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; padding: 10px 20px; cursor: pointer; border-radius: 1px; transition: all 0.3s;
+}
+.mat-filter-btn.active, .mat-filter-btn:hover { background: var(--gold-deep); color: #000; border-color: var(--gold-deep); }
+.mat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.mat-card { aspect-ratio: 1/1.05; position: relative; overflow: hidden; perspective: 900px; background: var(--charcoal2); cursor: pointer; border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 2px; }
+.mat-inner { position: absolute; inset: 0; transition: transform 0.22s linear; }
+.mat-card img { width: 100%; height: 100%; object-fit: cover; }
+.mat-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(11,10,8,0.75) 0%, transparent 50%); }
+.mat-info { position: absolute; left: 24px; bottom: 20px; z-index: 2; color: #fff; }
+.mat-cat  { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-bright); margin-bottom: 4px; }
+.mat-name { font-family: var(--serif); font-style: italic; font-size: 22px; font-weight: 300; }
+@media (max-width: 900px) { .mat-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .mat-grid { grid-template-columns: 1fr; } }
+
+/* BESPOKE SPATIAL ESTIMATOR */
+.estimator-section { padding: 10vh 6vw; background: var(--charcoal3); border-top: 1px solid rgba(212, 175, 55, 0.15); border-bottom: 1px solid rgba(212, 175, 55, 0.15); }
+.estimator-head { margin-bottom: 50px; text-align: center; }
+.estimator-head h3 { font-family: var(--serif); font-style: italic; font-size: clamp(32px, 4.8vw, 64px); font-weight: 300; margin-top: 16px; }
+.estimator-box {
+  max-width: 1100px; margin: 0 auto; background: rgba(20, 19, 16, 0.8); border: 1px solid var(--gold-line); padding: 50px; border-radius: 2px; backdrop-filter: blur(10px);
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: 50px;
+}
+@media (max-width: 900px) { .estimator-box { grid-template-columns: 1fr; padding: 30px; } }
+.est-controls { display: flex; flex-direction: column; gap: 28px; }
+.est-group label { display: block; font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-bright); margin-bottom: 12px; }
+.est-grid-select { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.est-opt {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.15); padding: 12px 10px; text-align: center;
+  font-size: 11px; color: rgba(255,255,255,0.7); cursor: pointer; border-radius: 1px; transition: all 0.3s;
+}
+.est-opt.active, .est-opt:hover { background: rgba(212, 175, 55, 0.15); border-color: var(--gold-deep); color: var(--gold-bright); }
+.est-slider-wrap { margin-top: 8px; }
+.est-slider-val { display: flex; justify-content: space-between; font-size: 13px; color: #fff; margin-bottom: 10px; font-family: var(--serif); font-style: italic; }
+.est-slider {
+  -webkit-appearance: none; width: 100%; height: 4px; background: rgba(255,255,255,0.15); outline: none; border-radius: 2px;
+}
+.est-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--gold-bright); cursor: pointer; border: 2px solid #000; box-shadow: 0 0 10px var(--gold-deep);
+}
+.est-results {
+  background: rgba(11, 10, 8, 0.85); border: 1px solid var(--gold-line); padding: 36px; display: flex; flex-direction: column; justify-content: space-between; border-radius: 1px;
+}
+.est-res-title { font-family: var(--cinzel); font-size: 12px; letter-spacing: 0.3em; color: var(--gold-deep); text-transform: uppercase; margin-bottom: 24px; }
+.est-res-row { margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 14px; }
+.est-res-row .lbl { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.4); display: block; margin-bottom: 4px; }
+.est-res-row .val { font-family: var(--serif); font-style: italic; font-size: 26px; color: var(--gold-bright); font-weight: 300; }
+.est-res-mats { font-size: 12px; color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.6; margin-bottom: 28px; }
+
+/* ULTRA-AESTHETIC ATELIER PROCESS SHOWCASE */
+.timeline-section {
+  padding: 12vh 6vw; background: var(--charcoal2); position: relative; overflow: hidden;
+  border-top: 1px solid rgba(212, 175, 55, 0.15); border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+.process-nav-bar {
+  display: flex; justify-content: space-between; position: relative; margin-bottom: 40px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.18); padding-bottom: 20px; flex-wrap: wrap; gap: 16px;
+}
+.process-nav-item {
+  display: flex; align-items: center; gap: 12px; cursor: pointer; opacity: 0.45;
+  transition: all 0.35s var(--ease); padding: 8px 16px; border-radius: 2px;
+}
+.process-nav-item:hover, .process-nav-item.active {
+  opacity: 1; background: rgba(212, 175, 55, 0.08); border-bottom: 2px solid var(--gold-bright);
+}
+.p-num { font-family: var(--cinzel); font-size: 13px; color: var(--gold-bright); font-weight: 600; }
+.p-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--white); font-weight: 400; }
+
+.process-card-stage {
+  display: grid; grid-template-columns: 48% 52%; gap: 4vw; align-items: center;
+  background: rgba(14, 13, 11, 0.88); border: 1px solid var(--gold-line); border-radius: 4px;
+  padding: 44px; backdrop-filter: blur(20px); box-shadow: 0 25px 70px rgba(0,0,0,0.8);
+}
+.p-stage-media { position: relative; height: 380px; border-radius: 3px; overflow: hidden; border: 1px solid rgba(212,175,55,0.2); }
+.p-stage-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+.p-stage-info .eyebrow { margin-bottom: 16px; }
+.p-stage-info h3 { font-family: var(--serif); font-style: italic; font-size: clamp(28px, 3.8vw, 48px); font-weight: 300; line-height: 1.1; color: var(--white); margin-bottom: 18px; }
+.p-stage-info p { font-size: 14.5px; color: rgba(255,255,255,0.65); font-weight: 300; line-height: 1.8; margin-bottom: 28px; }
+.p-deliverables { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
+.p-tag { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; padding: 6px 14px; border: 1px solid rgba(212,175,55,0.25); color: var(--gold-bright); background: rgba(212,175,55,0.06); border-radius: 1px; }
+.p-meta { display: flex; align-items: center; gap: 32px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+.p-meta .lbl { font-size: 8.5px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.4); display: block; margin-bottom: 4px; }
+.p-meta .val { font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--white); }
+
+@media (max-width: 900px) {
+  .process-card-stage { grid-template-columns: 1fr; padding: 28px; }
+  .p-stage-media { height: 260px; }
+}
+
+/* STATS */
+.stats { padding: 8vh 6vw; background: var(--charcoal2); border-top: 1px solid rgba(212,175,55,0.15); border-bottom: 1px solid rgba(212,175,55,0.15); }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; text-align: center; }
+.stat .num { font-family: var(--serif); font-style: italic; font-size: clamp(52px, 7vw, 96px); color: var(--gold-bright); font-weight: 300; }
+.stat .lbl { font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-top: 12px; }
+@media (max-width: 800px) { .stats-grid { grid-template-columns: repeat(2, 1fr); row-gap: 50px; } }
+
+/* AWARDS */
+.awards { padding: 10vh 6vw; background: var(--charcoal); }
+.awards-head { margin-bottom: 50px; }
+.awards-head .eyebrow { margin-bottom: 20px; }
+.awards-head h3 { font-family: var(--serif); font-style: italic; font-size: clamp(30px, 4.2vw, 56px); font-weight: 300; color: var(--white); }
+.awards-list { border-top: 1px solid rgba(212,175,55,0.18); }
+.award-row { display: flex; justify-content: space-between; align-items: center; padding: 24px 0; border-bottom: 1px solid rgba(212,175,55,0.1); transition: padding-left 0.35s var(--ease), background 0.35s; cursor: default; }
+.award-row:hover { padding-left: 20px; background: rgba(212,175,55,0.04); }
+.award-row .a-name { font-family: var(--serif); font-style: italic; font-size: 24px; color: var(--white); }
+.award-row .a-org  { font-size: 11px; letter-spacing: 0.16em; color: rgba(255,255,255,0.4); text-transform: uppercase; }
+.award-row .a-year { font-size: 12px; letter-spacing: 0.14em; color: var(--gold-deep); font-family: var(--serif); font-style: italic; }
+
+/* CINEMATIC 3D CIRCULAR TEAM GALLERY */
+.team {
+  padding: 14vh 6vw; background: var(--charcoal); position: relative; overflow: hidden;
+  border-top: 1px solid rgba(212, 175, 55, 0.15); border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+.team-bg-blueprint {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0.035;
+  background-image:
+    radial-gradient(circle, rgba(212,175,55,0.4) 1px, transparent 1px),
+    linear-gradient(to right, rgba(212,175,55,0.3) 1px, transparent 1px);
+  background-size: 40px 40px, 80px 80px;
+}
+.team-bg-spotlight {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 75vw; height: 60vh;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.09) 0%, rgba(11, 10, 8, 0) 70%);
+  pointer-events: none; filter: blur(90px);
+}
+
+.team-title-mask {
+  font-family: var(--serif); font-style: italic; font-size: clamp(34px, 4.8vw, 68px);
+  font-weight: 300; line-height: 1.08; color: var(--white); margin: 16px 0;
+  text-shadow: 0 4px 30px rgba(0,0,0,0.8);
+}
+.team-sub-mask {
+  font-size: 15px; color: rgba(255,255,255,0.65); font-weight: 300; max-width: 620px; margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* 3D CYLINDER CONTAINER */
+.team-3d-container {
+  position: relative; width: 100%; height: 500px;
+  perspective: 2000px; -webkit-perspective: 2000px;
+  display: flex; align-items: center; justify-content: center; margin: 30px 0;
+}
+.team-cylinder {
+  position: absolute; width: 240px; height: 360px;
+  transform-style: preserve-3d; -webkit-transform-style: preserve-3d;
+  will-change: transform; transition: transform 0.1s linear;
+}
+
+.team-3d-card {
+  position: absolute; width: 220px; height: 340px; left: 10px; top: 10px;
+  backface-visibility: visible; -webkit-backface-visibility: visible;
+  transform-style: preserve-3d; cursor: pointer;
+  transition: filter 0.4s var(--ease), opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.team-card-inner {
+  position: relative; width: 100%; height: 100%; border-radius: 4px;
+  background: rgba(18, 17, 14, 0.88); border: 1px solid var(--gold-line);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.85); backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px); padding: 24px 18px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  transition: all 0.35s var(--ease);
+}
+
+.team-3d-card:hover .team-card-inner {
+  border-color: var(--gold-bright);
+  box-shadow: 0 25px 60px rgba(212, 175, 55, 0.4), 0 0 30px rgba(212, 175, 55, 0.2);
+  transform: translateY(-8px) scale(1.04);
+}
+
+.team-avatar-wrap {
+  position: relative; width: 130px; height: 130px; border-radius: 50%; overflow: hidden;
+  border: 2px solid var(--gold-line); margin-bottom: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.6); transition: border-color 0.3s;
+}
+.team-3d-card:hover .team-avatar-wrap { border-color: var(--gold-bright); }
+.team-avatar-wrap img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.2) contrast(1.05); transition: transform 0.6s var(--ease), filter 0.6s var(--ease); }
+.team-3d-card:hover .team-avatar-wrap img { transform: scale(1.1); filter: grayscale(0) contrast(1.1); }
+
+.team-card-name {
+  font-family: var(--serif); font-style: italic; font-size: 20px; font-weight: 400; color: var(--white);
+  line-height: 1.15; margin-bottom: 6px; transition: color 0.3s;
+}
+.team-3d-card:hover .team-card-name { color: var(--gold-bright); }
+.team-card-role {
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-deep);
+  margin-bottom: 12px; font-weight: 500;
+}
+.team-card-divider { width: 28px; height: 1px; background: var(--gold-line); margin: 0 auto; transition: width 0.3s, background 0.3s; }
+.team-3d-card:hover .team-card-divider { width: 44px; background: var(--gold-bright); }
+
+.team-drag-hint {
+  text-align: center; font-size: 9.5px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45); margin-top: 24px; font-family: var(--sans);
+}
+
+/* TEAM MEMBER MODAL */
+.team-modal-backdrop {
+  position: fixed; inset: 0; z-index: 96000; background: rgba(8, 7, 5, 0.92); backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px); display: flex; align-items: center; justify-content: center;
+  padding: 40px 5vw; opacity: 0; pointer-events: none; transition: opacity 0.4s var(--ease);
+}
+.team-modal-backdrop.active { opacity: 1; pointer-events: auto; }
+.team-modal-content {
+  background: var(--charcoal2); border: 1px solid var(--gold-line); width: 100%; max-width: 820px;
+  border-radius: 4px; box-shadow: 0 25px 90px rgba(0,0,0,0.9); position: relative; overflow: hidden;
+  transform: translateY(30px) scale(0.96); transition: transform 0.4s var(--ease);
+  display: grid; grid-template-columns: 40% 60%;
+}
+.team-modal-backdrop.active .team-modal-content { transform: translateY(0) scale(1); }
+
+.tm-left { position: relative; height: 100%; min-height: 420px; border-right: 1px solid rgba(212,175,55,0.15); }
+.tm-left img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.95); }
+.tm-right { padding: 44px 38px; display: flex; flex-direction: column; justify-content: space-between; }
+.tm-close {
+  position: absolute; top: 20px; right: 20px; z-index: 10; background: rgba(11,10,8,0.7);
+  border: 1px solid var(--gold-line); color: var(--gold-bright); width: 36px; height: 36px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;
+  transition: all 0.3s; font-size: 13px;
+}
+.tm-close:hover { background: var(--gold-deep); color: #000; transform: rotate(90deg); }
+
+.tm-role { font-size: 9.5px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 8px; }
+.tm-name { font-family: var(--serif); font-style: italic; font-size: 36px; font-weight: 300; color: #fff; margin-bottom: 16px; line-height: 1.1; }
+.tm-bio { font-size: 13.5px; color: rgba(255,255,255,0.65); line-height: 1.8; font-weight: 300; margin-bottom: 28px; }
+
+.tm-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; margin-bottom: 24px; }
+.tm-stat .lbl { font-size: 8.5px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.4); display: block; margin-bottom: 4px; }
+.tm-stat .val { font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--gold-bright); }
+
+@media (max-width: 800px) {
+  .team-modal-content { grid-template-columns: 1fr; max-height: 88vh; overflow-y: auto; }
+  .tm-left { height: 260px; min-height: auto; }
+  .tm-right { padding: 28px 24px; }
+  .team-3d-container { height: 420px; }
+}
+
+/* CONSULTATION FORM */
+.consult { padding: 10vh 6vw; background: var(--charcoal3); color: var(--white); display: flex; gap: 8vw; flex-wrap: wrap; border-top: 1px solid rgba(212, 175, 55, 0.15); }
+.consult-info { flex: 1 1 380px; }
+.consult-info .eyebrow { margin-bottom: 22px; }
+.consult-info h3 { font-family: var(--serif); font-style: italic; font-size: clamp(34px, 4.8vw, 68px); font-weight: 300; margin-bottom: 24px; line-height: 1.05; }
+.consult-info p { font-size: 14px; color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.85; max-width: 420px; margin-bottom: 12px; }
+.consult-info .consult-detail { margin-top: 32px; display: flex; flex-direction: column; gap: 12px; }
+.consult-info .consult-detail p { font-size: 13px; color: rgba(255,255,255,0.4); margin: 0; }
+.consult-info .consult-detail strong { color: var(--gold-bright); font-weight: 400; }
+.consult-form { flex: 1 1 450px; background: rgba(20, 19, 16, 0.8); border: 1px solid var(--gold-line); padding: 40px; border-radius: 2px; backdrop-filter: blur(10px); }
+.field { margin-bottom: 24px; }
+.field label { display: block; font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 10px; }
+.field input, .field select, .field textarea {
+  width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.2); color: #fff;
+  font-family: var(--sans); font-size: 15px; padding: 10px 0; outline: none; transition: border-color 0.3s;
+}
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--gold-bright); }
+.field select option { background: var(--charcoal); color: #fff; }
+.field-row { display: flex; gap: 24px; }
+.field-row .field { flex: 1; }
+.consult-form .btn-gold { width: 100%; justify-content: center; margin-top: 14px; }
+
+/* MODALS & LIGHTBOXES */
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 95000; background: rgba(8, 7, 5, 0.92); backdrop-filter: blur(20px);
+  display: flex; align-items: center; justify-content: center; padding: 40px 5vw; opacity: 0; pointer-events: none;
+  transition: opacity 0.4s var(--ease);
+}
+.modal-backdrop.active { opacity: 1; pointer-events: auto; }
+.modal-container {
+  background: var(--charcoal2); border: 1px solid var(--gold-line); width: 100%; max-width: 960px; max-height: 90vh;
+  overflow-y: auto; position: relative; border-radius: 2px; box-shadow: 0 20px 80px rgba(0,0,0,0.8); transform: translateY(20px); transition: transform 0.4s var(--ease);
+}
+.modal-backdrop.active .modal-container { transform: translateY(0); }
+.modal-close {
+  position: absolute; top: 24px; right: 24px; z-index: 10; background: rgba(11,10,8,0.7); border: 1px solid var(--gold-line);
+  color: var(--gold-bright); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: background 0.3s, transform 0.3s;
+}
+.modal-close:hover { background: var(--gold-deep); color: #000; transform: rotate(90deg); }
+
+.project-modal-body { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 40px; }
+@media (max-width: 800px) { .project-modal-body { grid-template-columns: 1fr; padding: 24px; } }
+.pm-gallery { width: 100%; height: 380px; position: relative; overflow: hidden; border-radius: 2px; border: 1px solid rgba(212,175,55,0.2); }
+.pm-gallery img { width: 100%; height: 100%; object-fit: cover; }
+.pm-info h3 { font-family: var(--serif); font-style: italic; font-size: 38px; font-weight: 300; margin-bottom: 16px; color: #fff; }
+.pm-info p { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 24px; font-weight: 300; }
+.pm-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 30px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+.pm-spec .lbl { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-deep); }
+.pm-spec .val { font-family: var(--serif); font-style: italic; font-size: 16px; color: #fff; }
+
+/* SUCCESS MODAL */
+.success-modal-content { padding: 60px 40px; text-align: center; max-width: 540px; }
+.success-icon { width: 64px; height: 64px; border: 1px solid var(--gold-bright); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; color: var(--gold-bright); }
+.success-modal-content h3 { font-family: var(--serif); font-style: italic; font-size: 36px; font-weight: 300; margin-bottom: 12px; }
+.success-modal-content p { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 28px; line-height: 1.7; }
+.ref-box { background: rgba(212, 175, 55, 0.1); border: 1px dashed var(--gold-line); padding: 14px; font-family: var(--cinzel); font-size: 14px; color: var(--gold-bright); margin-bottom: 32px; letter-spacing: 0.2em; }
+
+/* FOOTER */
+footer { background: var(--charcoal); padding: 8vh 6vw 4vh; border-top: 1px solid rgba(212, 175, 55, 0.15); }
+.foot-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; flex-wrap: wrap; padding-bottom: 6vh; border-bottom: 1px solid rgba(212,175,55,0.14); }
+.foot-logo { font-family: var(--curvy); font-style: italic; font-weight: 700; font-size: clamp(52px, 8vw, 130px); color: var(--white); line-height: 1; }
+.foot-logo span { display: block; font-size: 0.18em; letter-spacing: 0.6em; color: var(--gold-deep); font-family: var(--sans); font-weight: 300; margin-top: 4px; text-transform: uppercase; }
+.foot-cols { display: flex; gap: 80px; flex-wrap: wrap; align-items: flex-start; margin-top: 12px; }
+.foot-col h5 { font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 20px; }
+.foot-col a, .foot-col p { display: block; font-size: 13px; margin-bottom: 12px; color: rgba(255,255,255,0.45); font-weight: 300; transition: color 0.3s; }
+.foot-col a:hover { color: var(--gold-bright); }
+.foot-bottom { display: flex; justify-content: space-between; padding-top: 4vh; font-size: 10px; color: rgba(255,255,255,0.28); flex-wrap: wrap; gap: 14px; letter-spacing: 0.1em; }
+
+/* 100X ULTRA-LUXURY ANIMATIONS & METALLIC SHIMMER */
+@keyframes goldLightSweep {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes goldPulseGlow {
+  0% { box-shadow: 0 0 15px rgba(212,175,55,0.15); }
+  100% { box-shadow: 0 0 35px rgba(212,175,55,0.35); }
+}
+
+.eyebrow {
+  background: linear-gradient(90deg, var(--gold-deep) 0%, #FFFFFF 50%, var(--gold-deep) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldLightSweep 7s linear infinite;
+  font-weight: 600; letter-spacing: 0.26em;
+}
+
+.btn-gold, .nav-cta {
+  position: relative; overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6), inset 0 0 15px rgba(255,242,212,0.2);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+.btn-gold::after, .nav-cta::after {
+  content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transform: skewX(-25deg); transition: left 0.75s var(--ease); pointer-events: none;
+}
+.btn-gold:hover::after, .nav-cta:hover::after { left: 140%; }
+
+/* ============================================================
+   RESPONSIVE DESIGN SUITE FOR MOBILE, TABLET & SMALL DEVICES
+============================================================ */
+html, body { overflow-x: hidden !important; width: 100vw; max-width: 100%; }
+
+@media (max-width: 768px) {
+  header.nav { padding: 18px 4vw; }
+  header.nav.scrolled { padding: 12px 4vw; }
+  .nav-logo { font-size: 22px; }
+  .nav-sub { font-size: 6.5px; letter-spacing: 0.4em; }
+  nav.links { max-width: 50vw; gap: 12px; }
+  nav.links a { font-size: 7.5px; letter-spacing: 0.16em; }
+  .nav-cta { font-size: 7.5px; padding: 7px 12px; }
+
+  .hero-main-title-box { left: 4vw; max-width: 94vw; }
+  .hero-brand-title { font-size: clamp(64px, 14vw, 120px); }
+  .hero-studio-subtitle { font-size: 11px; letter-spacing: 0.4em; }
+
+  .collections-section { padding: 10vh 4vw; }
+  .col-grid { gap: 12px; }
+  .col-card-tag { font-size: 7.5px; }
+  .col-card-title { font-size: 14px; }
+
+  .timeline-section { padding: 8vh 4vw; }
+  .process-nav-bar {
+    overflow-x: auto; flex-wrap: nowrap; padding-bottom: 12px; gap: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .process-nav-bar::-webkit-scrollbar { display: none; }
+  .process-nav-item { padding: 6px 12px; min-width: max-content; }
+  .process-card-stage { padding: 24px 18px; border-radius: 2px; }
+  .p-stage-media { height: 220px; }
+  .p-stage-info h3 { font-size: 24px; }
+  .p-stage-info p { font-size: 13px; line-height: 1.65; }
+
+  .team { padding: 10vh 4vw; }
+  .team-3d-container { height: 380px; }
+  .team-cylinder { width: 170px; height: 260px; }
+  .team-3d-card { width: 160px; height: 260px; left: 5px; top: 0px; }
+  .team-card-inner { padding: 16px 12px; }
+  .team-avatar-wrap { width: 90px; height: 90px; margin-bottom: 12px; }
+  .team-card-name { font-size: 16px; margin-bottom: 4px; }
+  .team-card-role { font-size: 7.5px; letter-spacing: 0.16em; margin-bottom: 8px; }
+
+  .consult { padding: 8vh 4vw; }
+  .consult-form { padding: 24px 18px; }
+  .field-row { flex-direction: column; gap: 0; }
+
+  footer { padding: 6vh 4vw 3vh; }
+  .foot-cols { gap: 32px; }
+}
+
+@media (max-width: 480px) {
+  .hero-brand-title { font-size: clamp(54px, 13vw, 90px); }
+  .col-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .col-card-title { font-size: 13px; }
+  .team-3d-container { height: 360px; }
+  .team-cylinder { width: 150px; height: 240px; }
+  .team-3d-card { width: 145px; height: 240px; }
+  .team-avatar-wrap { width: 80px; height: 80px; }
+}
+
+.reveal-up { opacity: 0; transform: translateY(50px); }
+</style>
+</head>
+<body>
+
+
+
+<!-- SCROLL PROGRESS BAR -->
+<div class="scroll-progress-bar" id="scrollProgress"></div>
+
+
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="pl-logo-wrap">
+    <div class="pl-logo" id="plText">Velora Studio</div>
+  </div>
+  <div class="pl-line"><span id="plBar"></span></div>
+  <div class="pl-count" id="plCount">0%</div>
+</div>
+
+<!-- FLOATING TRANSPARENT NAVBAR -->
+<header class="nav" id="siteNav">
+  <div class="nav-brand" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+    <div class="nav-logo">Velora</div>
+    <div class="nav-sub">Studio</div>
+  </div>
+  <nav class="links">
+    <a href="#home">Home</a>
+    <a href="#projects">Projects</a>
+    <a href="#collections">Collections</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#estimator">Estimator</a>
+    <a href="#process">Process</a>
+    <a href="#team">Studio</a>
+    <a href="#consultation">Consultation</a>
+  </nav>
+  <div class="nav-actions">
+    <a href="#consultation" class="nav-cta">Book Consultation</a>
+  </div>
+</header>
+
+<!-- GRAND HERO LANDING SECTION WITH UNCLIPPED BIGGER STUDIO TEXT -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <img src="landing page image.webp" alt="Velora Studio Luxury Interior Architecture">
+  </div>
+  <div class="hero-scrim"></div>
+  
+  <div class="hero-main-title-box">
+    <h1 class="hero-brand-title" id="heroTitle">
+      Velora <span class="gold-shimmer-text">Studio</span>
+    </h1>
+  </div>
+
+  <div class="hero-bottom-bar">
+    <div class="hero-scroll-label">
+      <div class="vline"><span></span></div>
+      <span>SCROLL TO DISCOVER</span>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY HORIZONTAL SCROLL WITH AESTHETIC PAINTING BACKDROP & MANIFESTO QUOTE -->
+<div class="journey-wrap">
+  <div class="journey-intro-box">
+    <div class="journey-intro-scrim"></div>
+    <div class="journey-intro">
+      <div class="eyebrow" style="justify-content: center;">Velora Studio Manifesto</div>
+      <div class="journey-intro-left">
+        <h3 style="font-size: clamp(22px, 3.2vw, 42px); line-height: 1.4; max-width: 880px; font-weight: 300; font-family: var(--serif); font-style: italic; color: #FFFFFF; text-shadow: 0 4px 30px rgba(0,0,0,0.9);">
+          &ldquo;Just like a woman who weaves grace, resilience, and depth into every corner of life, Velora Studio designs spaces that don't just hold walls, but hold the soul.&rdquo;
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="journey-pin" id="journeyPin">
+    <div class="journey-track" id="journeyTrack">
+      <div class="journey-card" onclick="openLightbox('designs/HD-wallpaper-luxury-interior-design-living-room-gold-metal-fixtures-black-marble-walls-gray-marble-floor-in-the-living-room.jpg', 'Living Room Sanctuary', 'Private estate living room with custom linen seating and golden light accents.')">
+        <img src="designs/HD-wallpaper-luxury-interior-design-living-room-gold-metal-fixtures-black-marble-walls-gray-marble-floor-in-the-living-room.jpg" alt="Warm living room">
+        <div class="journey-tag"><span class="num">01</span><span class="name">Living Room</span></div>
+        <span class="journey-card-btn">View Photo &#x2197;</span>
+      </div>
+      <div class="journey-card" onclick="openLightbox('designs/luxury_house_interior-wallpaper-2560x1600.jpg', 'Private Retreat', 'Master suite rendered in travertine stone and acoustically treated oak.')">
+        <img src="designs/luxury_house_interior-wallpaper-2560x1600.jpg" alt="Serene retreat">
+        <div class="journey-tag"><span class="num">02</span><span class="name">Private Retreat</span></div>
+        <span class="journey-card-btn">View Photo &#x2197;</span>
+      </div>
+      <div class="journey-card" onclick="openLightbox('designs/photo-1590381105924-c72589b9ef3f.avif', 'Open Plan Pavilion', 'Fluid spatial transition between interior salon and outdoor garden terrace.')">
+        <img src="designs/photo-1590381105924-c72589b9ef3f.avif" alt="Open plan">
+        <div class="journey-tag"><span class="num">03</span><span class="name">Open Plan</span></div>
+        <span class="journey-card-btn">View Photo &#x2197;</span>
+      </div>
+      <div class="journey-card" onclick="openLightbox('designs/pexels-ranamatloob567-35203563.jpg', 'Heritage Salon', 'Restored historical residence featuring classical moldings and contemporary bronze.')">
+        <img src="designs/pexels-ranamatloob567-35203563.jpg" alt="Heritage space">
+        <div class="journey-tag"><span class="num">04</span><span class="name">Heritage Space</span></div>
+        <span class="journey-card-btn">View Photo &#x2197;</span>
+      </div>
+      <div class="journey-card" onclick="openLightbox('designs/HD-wallpaper-living-room-modern-interior-design-stylish-interior-design-of-the-living-room-gray-green-living-room-luxurious-interiors.jpg', 'Nature Atelier', 'Panoramic garden pavilion framing surrounding pine woods and organic stone.')">
+        <img src="designs/HD-wallpaper-living-room-modern-interior-design-stylish-interior-design-of-the-living-room-gray-green-living-room-luxurious-interiors.jpg" alt="Nature studio">
+        <div class="journey-tag"><span class="num">05</span><span class="name">Nature Studio</span></div>
+        <span class="journey-card-btn">View Photo &#x2197;</span>
+      </div>
+      <div class="journey-card" onclick="openLightbox('designs/into-exclusive-waiting-room-interior-luxury-interior.jpg', 'Sculptural Foyer', 'Monolithic marble entryway with customized floating bronze staircase.')">
+        <img src="designs/into-exclusive-waiting-room-interior-luxury-interior.jpg" alt="Sculptural entry">
+        <div class="journey-tag"><span class="num">06</span><span class="name">Sculptural Entry</span></div>
+        <span class="journey-card-btn">View Photo &#x2197;</span>
+      </div>
+      <div class="journey-card" onclick="openLightbox('designs/Interior-decorating-websites-inspiration-Elle-Decor-750x.jpg', 'Grand Penthouse Suite', 'Triple-height penthouse living zone overlooking cityscape lights.')">
+        <img src="designs/Interior-decorating-websites-inspiration-Elle-Decor-750x.jpg" alt="Grand suite">
+        <div class="journey-tag"><span class="num">07</span><span class="name">Grand Suite</span></div>
+        <span class="journey-card-btn">View Photo &#x2197;</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNATURE PROJECTS -->
+<div id="projects">
+  <div class="project-header">
+    <div class="eyebrow">Signature Projects</div>
+    <h2>Portfolio of<br><em style="font-style:italic;color:var(--gold-deep);font-family:var(--display);">distinction.</em></h2>
+  </div>
+
+  <section class="project">
+    <div class="project-media" onclick="openProjectModal('aurelio')">
+      <img src="designs/HD-wallpaper-luxury-interior-design-living-room-gold-metal-fixtures-black-marble-walls-gray-marble-floor-in-the-living-room.jpg" alt="Villa Aurelio">
+      <div class="proj-overlay"></div>
+      <div class="project-num">01</div>
+    </div>
+    <div class="project-info">
+      <div class="eyebrow">Signature Project — 01</div>
+      <h3>Villa Aurelio</h3>
+      <p>A sculptural residence on the Amalfi coastline, where travertine and brushed brass hold the light of the sea until dusk. Every material chosen against Mediterranean sun.</p>
+      <div class="project-meta">
+        <div><span class="label">Location</span><span class="val">Positano, Italy</span></div>
+        <div><span class="label">Concept</span><span class="val">Coastal Minimalism</span></div>
+        <div><span class="label">Area</span><span class="val">1,240 m²</span></div>
+        <div><span class="label">Year</span><span class="val">2025</span></div>
+      </div>
+      <button class="btn btn-outline-gold" onclick="openProjectModal('aurelio')">Explore Villa Aurelio &#x2197;</button>
+    </div>
+  </section>
+
+  <section class="project reverse">
+    <div class="project-media" onclick="openProjectModal('noir')">
+      <img src="designs/pexels-ranamatloob567-35203563.jpg" alt="Penthouse Noir">
+      <div class="proj-overlay"></div>
+      <div class="project-num">02</div>
+    </div>
+    <div class="project-info">
+      <div class="eyebrow">Signature Project — 02</div>
+      <h3>Penthouse Noir</h3>
+      <p>Matte steel meets warm walnut across three floors above the city skyline — a private sanctuary for living quietly. Midnight tones softened by pools of golden light.</p>
+      <div class="project-meta">
+        <div><span class="label">Location</span><span class="val">Dubai, UAE</span></div>
+        <div><span class="label">Concept</span><span class="val">Urban Sanctuary</span></div>
+        <div><span class="label">Area</span><span class="val">860 m²</span></div>
+        <div><span class="label">Year</span><span class="val">2024</span></div>
+      </div>
+      <button class="btn btn-outline-gold" onclick="openProjectModal('noir')">Explore Penthouse Noir &#x2197;</button>
+    </div>
+  </section>
+
+  <section class="project">
+    <div class="project-media" onclick="openProjectModal('ivoire')">
+      <img src="designs/luxury_house_interior-wallpaper-2560x1600.jpg" alt="Maison Ivoire">
+      <div class="proj-overlay"></div>
+      <div class="project-num">03</div>
+    </div>
+    <div class="project-info">
+      <div class="eyebrow">Signature Project — 03</div>
+      <h3>Maison Ivoire</h3>
+      <p>An Alpine estate carved into limestone and raw linen, designed around the silence of snowfall and slow mornings. Classical grandeur with restrained modern ease.</p>
+      <div class="project-meta">
+        <div><span class="label">Location</span><span class="val">Courchevel, France</span></div>
+        <div><span class="label">Concept</span><span class="val">Alpine Serenity</span></div>
+        <div><span class="label">Area</span><span class="val">1,980 m²</span></div>
+        <div><span class="label">Year</span><span class="val">2023</span></div>
+      </div>
+      <button class="btn btn-outline-gold" onclick="openProjectModal('ivoire')">Explore Maison Ivoire &#x2197;</button>
+    </div>
+  </section>
+
+  <section class="project reverse">
+    <div class="project-media" onclick="openProjectModal('velasco')">
+      <img src="designs/photo-1590381105924-c72589b9ef3f.avif" alt="Casa Velasco">
+      <div class="proj-overlay"></div>
+      <div class="project-num">04</div>
+    </div>
+    <div class="project-info">
+      <div class="eyebrow">Signature Project — 04</div>
+      <h3>Casa Velasco</h3>
+      <p>A sun-drenched Mediterranean retreat where terracotta, raw silk, and hand-carved stone create an atmosphere of unhurried luxury. Every room opens to ocean horizon.</p>
+      <div class="project-meta">
+        <div><span class="label">Location</span><span class="val">Marbella, Spain</span></div>
+        <div><span class="label">Concept</span><span class="val">Mediterranean Warmth</span></div>
+        <div><span class="label">Area</span><span class="val">2,200 m²</span></div>
+        <div><span class="label">Year</span><span class="val">2025</span></div>
+      </div>
+      <button class="btn btn-outline-gold" onclick="openProjectModal('velasco')">Explore Casa Velasco &#x2197;</button>
+    </div>
+  </section>
+</div>
+
+<!-- FEATURED INTERIOR COLLECTION (3D WAVE FLIP GALLERY SHOWCASE) -->
+<section class="collections-section" id="collections">
+  <div class="col-bg-texture"></div>
+  <div class="col-bg-glow"></div>
+  
+  <div class="col-header">
+    <div class="col-header-info">
+      <div class="eyebrow">Featured Interior Collection</div>
+      <h2>Curated Interior Workspaces &amp; Residences.</h2>
+    </div>
+    <div class="col-controls">
+      <div class="col-badge" id="colBadge">SET 01 / 04 &bull; RESIDENCES</div>
+      <button class="col-nav-btn active" onclick="switchCollection(0)">01</button>
+      <button class="col-nav-btn" onclick="switchCollection(1)">02</button>
+      <button class="col-nav-btn" onclick="switchCollection(2)">03</button>
+      <button class="col-nav-btn" onclick="switchCollection(3)">04</button>
+    </div>
+  </div>
+
+  <div class="col-grid" id="colGrid">
+    <!-- 12 3D Wave Flip Cards rendered dynamically by JS -->
+  </div>
+</section>
+
+<!-- BEFORE / AFTER INTERACTIVE RENOVATION SLIDER (CUSTOM ULTRA-AESTHETIC COMPONENT) -->
+<section class="ba-section">
+  <div class="eyebrow ba-eyebrow">Spatial Transformation</div>
+  <h3>The space, unchanged in bones, entirely reborn in light.</h3>
+  <div class="ba-slider" id="baSlider">
+    <img class="ba-after" src="designs/room_after_renovation.png" alt="After renovation Velora luxury design">
+    <div class="ba-before-wrap" id="baBeforeWrap">
+      <img src="designs/room_before_renovation.png" alt="Before renovation empty architectural shell">
+    </div>
+    <div class="ba-custom-handle" id="baHandle">
+      <div class="ba-moving-tag ba-moving-tag-before" id="baTagBefore">BEFORE &bull; RAW SPACE</div>
+      <div class="ba-handle-badge">
+        <div class="ba-badge-inner">
+          <span class="ba-arrow left">&#x2039;</span>
+          <span class="ba-badge-txt">SLIDE</span>
+          <span class="ba-arrow right">&#x203A;</span>
+        </div>
+      </div>
+      <div class="ba-moving-tag ba-moving-tag-after" id="baTagAfter">VELORA DESIGN &bull; LUXURY INTERIOR</div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO TEAR REVEAL LUXURY REVIEW EXPERIENCE -->
+<section class="reviews-section" id="reviews">
+  <div class="rev-bg-grid"></div>
+  <div class="rev-bg-glow"></div>
+
+  <div class="reviews-pin-container" id="reviewsPinContainer">
+    <div class="reviews-layout">
+
+      <!-- LEFT COLUMN: EDITORIAL CONTENT PANEL (42%) -->
+      <div class="rev-left-panel">
+        <div>
+          <div class="rev-eyebrow-wrap">
+            <div class="eyebrow">Client Testimonials</div>
+            <div class="rev-counter-badge" id="revCounterBadge">REVIEW 01 / 10</div>
+          </div>
+          <div class="rev-stars" id="revStars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+          <div class="rev-quote-icon">&ldquo;</div>
+          <h3 class="rev-title" id="revTitle">A Sanctuary Built Around Light &amp; Silence</h3>
+          <p class="rev-desc" id="revDesc">
+            Velora didn't just design our sea-facing villa — they understood how our family moves through light and silence. Living here feels like living inside a masterwork rendered in travertine stone and patinated brass.
+          </p>
+          <div class="rev-divider"></div>
+        </div>
+
+        <div>
+          <div class="rev-meta-block">
+            <img class="rev-avatar" id="revAvatar" src="reviews/istockphoto-1191927378-612x612.jpg" alt="Client Avatar">
+            <div>
+              <div class="rev-client-name" id="revClientName">Isabelle &amp; Henri Roux</div>
+              <div class="rev-client-sub" id="revClientSub">Cap Ferrat, France &bull; Coastal Minimalist</div>
+            </div>
+          </div>
+
+          <div class="rev-stats-grid">
+            <div class="rev-stat"><span class="lbl">Property Area</span><div class="val" id="revStatArea">1,240 m²</div></div>
+            <div class="rev-stat"><span class="lbl">Completed</span><div class="val" id="revStatYear">2025</div></div>
+            <div class="rev-stat"><span class="lbl">Duration</span><div class="val" id="revStatDuration">14 Months</div></div>
+          </div>
+
+          <div style="display:flex; justify-space-between; align-items:center;">
+            <button class="btn btn-gold" id="revCtaBtn" onclick="openActiveReviewModal()">View Project Story &#x2197;</button>
+            <div class="rev-nav-dots" id="revNavDots">
+              <div class="rev-dot active"></div><div class="rev-dot"></div><div class="rev-dot"></div><div class="rev-dot"></div><div class="rev-dot"></div>
+              <div class="rev-dot"></div><div class="rev-dot"></div><div class="rev-dot"></div><div class="rev-dot"></div><div class="rev-dot"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: 3D PHOTO TEAR STAGE (58%) -->
+      <div class="rev-right-stage" id="revStage">
+        <div class="rev-stage-inner">
+          <div class="rev-under-layer" id="revUnderLayer">
+            <img id="revUnderImg" src="reviews/istockphoto-1197450796-612x612.jpg" alt="Next Review Image">
+          </div>
+          <div class="rev-tear-layer" id="revTearLayer">
+            <div class="tear-half tear-half-left" id="tearHalfLeft">
+              <img id="revTearImgLeft" src="reviews/istockphoto-1191927378-612x612.jpg" alt="Current Review Left Half">
+            </div>
+            <div class="tear-half tear-half-right" id="tearHalfRight">
+              <img id="revTearImgRight" src="reviews/istockphoto-1191927378-612x612.jpg" alt="Current Review Right Half">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<!-- INTERACTIVE BESPOKE SPATIAL ESTIMATOR (INDIAN & GLOBAL STANDARDS) -->
+<section class="estimator-section" id="estimator">
+  <div class="estimator-head">
+    <div class="eyebrow" style="justify-content: center;">Bespoke Spatial Estimator</div>
+    <h3>Estimate Your Spatial Investment</h3>
+    <div class="est-curr-toggle" style="margin-top: 20px;">
+      <button class="est-curr-btn active" id="currBtnINR" onclick="setCurrency('INR')">&#x20B9; INR (Lakhs &amp; Crores)</button>
+      <button class="est-curr-btn" id="currBtnUSD" onclick="setCurrency('USD')">$ USD (Millions)</button>
+    </div>
+  </div>
+  <div class="estimator-box">
+    <div class="est-controls">
+      <div class="est-group">
+        <label>Primary Project Location</label>
+        <div class="est-grid-select">
+          <div class="est-opt active" onclick="selectEstOpt(this, 'location', 'mumbai')">Mumbai &bull; Altamount / Bandra</div>
+          <div class="est-opt" onclick="selectEstOpt(this, 'location', 'delhi')">Delhi &bull; Lutyens</div>
+          <div class="est-opt" onclick="selectEstOpt(this, 'location', 'bengaluru')">Bengaluru &bull; Indiranagar</div>
+          <div class="est-opt" onclick="selectEstOpt(this, 'location', 'goa')">Goa &bull; Beachfront</div>
+          <div class="est-opt" onclick="selectEstOpt(this, 'location', 'dubai')">Dubai &bull; Palm / D3</div>
+          <div class="est-opt" onclick="selectEstOpt(this, 'location', 'london')">London &bull; Mayfair</div>
+        </div>
+      </div>
+      <div class="est-group">
+        <label>Property Residence Type</label>
+        <div class="est-grid-select">
+          <div class="est-opt active" onclick="selectEstOpt(this, 'type', 'penthouse')">Sky Penthouse</div>
+          <div class="est-opt" onclick="selectEstOpt(this, 'type', 'villa')">Heritage Manor / Villa</div>
+          <div class="est-opt" onclick="selectEstOpt(this, 'type', 'estate')">Oceanfront Estate</div>
+        </div>
+      </div>
+      <div class="est-group">
+        <label>Design Aesthetic Theme</label>
+        <div class="est-grid-select">
+          <div class="est-opt active" onclick="selectEstOpt(this, 'theme', 'coastal')">Royal Modern</div>
+          <div class="est-opt" onclick="selectEstOpt(this, 'theme', 'noir')">Midnight Luxury</div>
+          <div class="est-opt" onclick="selectEstOpt(this, 'theme', 'heritage')">Indo-European Serenity</div>
+        </div>
+      </div>
+      <div class="est-group">
+        <label>Total Floor Area</label>
+        <div class="est-slider-wrap">
+          <div class="est-slider-val"><span>Area:</span><span id="estAreaVal">4,840 sq ft (450 m²)</span></div>
+          <input type="range" min="150" max="2500" value="450" class="est-slider" id="estAreaSlider" oninput="updateEstimator()">
+        </div>
+      </div>
+      <div class="est-group">
+        <label>Furnishing &amp; Art Curation Level</label>
+        <div class="est-grid-select">
+          <div class="est-opt active" onclick="selectEstOpt(this, 'level', 'bespoke')">Full Bespoke</div>
+          <div class="est-opt" onclick="selectEstOpt(this, 'level', 'atelier')">Atelier Exclusive</div>
+          <div class="est-opt" onclick="selectEstOpt(this, 'level', 'gallery')">Museum Grade</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="est-results">
+      <div>
+        <div class="est-res-title">Estimated Studio Brief</div>
+        <div class="est-res-row">
+          <span class="lbl">Estimated Timeline</span>
+          <div class="val" id="estTimeRes">6 &ndash; 8 Months</div>
+        </div>
+        <div class="est-res-row">
+          <span class="lbl">Investment Range</span>
+          <div class="val" id="estBudgetRes">&#x20B9;1.4 Cr &ndash; &#x20B9;2.1 Cr</div>
+        </div>
+        <div class="est-res-mats">
+          <strong>Curated Materials Included:</strong><br>
+          <span id="estMatsRes">Travertine Stone, Smoked Oak, Hand-Patinated Brass, Tuscan Leather.</span>
+        </div>
+      </div>
+      <button class="btn btn-gold" onclick="transferEstimateToForm()">Apply Brief to Consultation &#x2197;</button>
+    </div>
+  </div>
+</section>
+
+<!-- ULTRA-AESTHETIC ATELIER PROCESS SHOWCASE -->
+<section class="timeline-section" id="process">
+  <div class="timeline-head">
+    <div class="eyebrow">The Atelier Process</div>
+    <h3>Five stages, one uninterrupted vision from first sketch to final key handover.</h3>
+  </div>
+
+  <div class="process-nav-bar" id="processNav">
+    <div class="process-nav-item active" onclick="setProcessStage(0)">
+      <span class="p-num">01</span><span class="p-label">Discovery Audit</span>
+    </div>
+    <div class="process-nav-item" onclick="setProcessStage(1)">
+      <span class="p-num">02</span><span class="p-label">Spatial Concept</span>
+    </div>
+    <div class="process-nav-item" onclick="setProcessStage(2)">
+      <span class="p-num">03</span><span class="p-label">4K Visualization</span>
+    </div>
+    <div class="process-nav-item" onclick="setProcessStage(3)">
+      <span class="p-num">04</span><span class="p-label">Artisanal Execution</span>
+    </div>
+    <div class="process-nav-item" onclick="setProcessStage(4)">
+      <span class="p-num">05</span><span class="p-label">White-Glove Handover</span>
+    </div>
+  </div>
+
+  <div class="process-card-stage" id="processCard">
+    <div class="p-stage-media">
+      <img id="pStageImg" src="designs/room_before_renovation.png" alt="Discovery Audit">
+    </div>
+    <div class="p-stage-info">
+      <div class="eyebrow" id="pStageStep">STAGE 01 / 05 &bull; LIFESTYLE AUDIT</div>
+      <h3 id="pStageTitle">Studying How You Move, Light Patterns &amp; Silence</h3>
+      <p id="pStageDesc">We study how you live, not just how you decorate — analyzing natural light diffusion across seasons, morning rituals, and acoustic preferences before drawing a single line.</p>
+      <div class="p-deliverables" id="pStageTags">
+        <span class="p-tag">Spatial Brief</span>
+        <span class="p-tag">Acoustic Analysis</span>
+        <span class="p-tag">Solar Angle Mapping</span>
+      </div>
+      <div class="p-meta">
+        <div><span class="lbl">Estimated Duration</span><div class="val" id="pStageDuration">2 Weeks</div></div>
+        <div><span class="lbl">Key Output</span><div class="val" id="pStageOutput">Master Spatial Brief</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-grid">
+    <div class="stat"><div class="num" data-count="250" data-suffix="+">0</div><div class="lbl">Luxury Residences</div></div>
+    <div class="stat"><div class="num" data-count="120" data-suffix="+">0</div><div class="lbl">Commercial Projects</div></div>
+    <div class="stat"><div class="num" data-count="18"  data-suffix="">0</div><div class="lbl">Countries Worldwide</div></div>
+    <div class="stat"><div class="num" data-count="99"  data-suffix="%">0</div><div class="lbl">Client Satisfaction</div></div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section class="awards">
+  <div class="awards-head">
+    <div class="eyebrow">Recognition</div>
+    <h3>Honors of distinction.</h3>
+  </div>
+  <div class="awards-list">
+    <div class="award-row"><span class="a-name">Best Residential Interior</span><span class="a-org">International Design Awards</span><span class="a-year">2025</span></div>
+    <div class="award-row"><span class="a-name">Studio of the Year</span><span class="a-org">Architectural Digest</span><span class="a-year">2024</span></div>
+    <div class="award-row"><span class="a-name">Excellence in Materiality</span><span class="a-org">European Design Prize</span><span class="a-year">2024</span></div>
+    <div class="award-row"><span class="a-name">Best Hospitality Concept</span><span class="a-org">Hospitality Design Awards</span><span class="a-year">2023</span></div>
+    <div class="award-row"><span class="a-name">Rising Studio Honour</span><span class="a-org">Dezeen Awards</span><span class="a-year">2022</span></div>
+  </div>
+</section>
+
+<!-- CINEMATIC 3D CIRCULAR TEAM GALLERY -->
+<section class="team" id="team">
+  <div class="team-bg-spotlight"></div>
+  <div class="team-bg-blueprint"></div>
+  
+  <div class="team-head text-center" style="text-align: center; max-width: 820px; margin: 0 auto 50px;">
+    <div class="eyebrow" style="justify-content: center;">The Atelier Masters</div>
+    <h2 class="team-title-mask" id="teamTitleMask">Meet The Minds Behind Every Space</h2>
+    <p class="team-sub-mask" id="teamSubMask">Elegant interiors begin with exceptional designers, architects, and creative thinkers.</p>
+  </div>
+
+  <div class="team-3d-container" id="team3DContainer">
+    <div class="team-cylinder" id="teamCylinder">
+      <!-- 10 3D circular cards generated by JS -->
+    </div>
+  </div>
+
+  <div class="team-drag-hint">
+    <span class="fc-sparkle">&#x2726;</span> ROTATING 3D ATELIER GALLERY &bull; CLICK ANY MEMBER FOR FULL PROFILE
+  </div>
+</section>
+
+<!-- CONSULTATION FORM -->
+<section class="consult" id="consultation">
+  <div class="consult-info">
+    <div class="eyebrow">Begin the Journey</div>
+    <h3>Let's design your next chapter.</h3>
+    <p>Consultations are private, unhurried, and begin with a quiet conversation about how you wish to live. We accept a strictly limited number of commissions each year.</p>
+    <div class="consult-detail">
+      <p><strong>Direct Email</strong> hello@velorastudio.com</p>
+      <p><strong>Concierge Line</strong> +33 1 42 86 00 00</p>
+      <p><strong>Paris Atelier</strong> 14 Rue de Marignan, 75008 Paris</p>
+      <p><strong>Dubai Atelier</strong> Dubai Design District, D3</p>
+    </div>
+  </div>
+
+  <form class="consult-form" id="consultForm" onsubmit="handleFormSubmit(event)">
+    <div class="field-row">
+      <div class="field"><label>First Name</label><input type="text" id="fnInput" required placeholder="Alexandre"></div>
+      <div class="field"><label>Last Name</label><input type="text" id="lnInput" required placeholder="Dupont"></div>
+    </div>
+    <div class="field"><label>Email Address</label><input type="email" id="emailInput" required placeholder="alexandre@example.com"></div>
+    <div class="field"><label>Phone / WhatsApp</label><input type="tel" id="phoneInput" placeholder="+33 6 00 00 00 00"></div>
+    <div class="field-row">
+      <div class="field">
+        <label>Project Residence Type</label>
+        <select id="projectTypeSelect">
+          <option>Private Residence</option>
+          <option>Penthouse</option>
+          <option>Coastal Villa</option>
+          <option>Alpine Estate</option>
+          <option>Boutique Hospitality</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Estimated Budget</label>
+        <select id="budgetSelect">
+          <option>$500K &ndash; $1M</option>
+          <option>$1M &ndash; $3M</option>
+          <option>$3M &ndash; $10M</option>
+          <option>$10M+</option>
+        </select>
+      </div>
+    </div>
+    <div class="field"><label>Describe Your Vision</label><textarea id="visionText" rows="4" placeholder="Tell us about your property, location, timeline, and lifestyle preferences..."></textarea></div>
+    <button type="submit" id="submitBtn" class="btn btn-gold">Request Private Consultation &#x2197;</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-top">
+    <div class="foot-logo">Velora<span>STUDIO</span></div>
+    <div class="foot-cols">
+      <div class="foot-col">
+        <h5>Atelier</h5>
+        <a href="#home">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#collections">Collections</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#estimator">Estimator</a>
+        <a href="#process">Process</a>
+        <a href="#team">The Studio</a>
+        <a href="#consultation">Consultation</a>
+      </div>
+      <div class="foot-col">
+        <h5>Contact</h5>
+        <p>hello@velorastudio.com</p>
+        <p>+33 1 42 86 00 00</p>
+        <p>+971 4 000 0000</p>
+      </div>
+      <div class="foot-col">
+        <h5>Locations</h5>
+        <p>14 Rue de Marignan, Paris</p>
+        <p>Dubai Design District, D3</p>
+        <p>Via Montenapoleone, Milan</p>
+      </div>
+      <div class="foot-col">
+        <h5>Follow</h5>
+        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram &#x2197;</a>
+        <a href="https://pinterest.com" target="_blank" rel="noopener">Pinterest &#x2197;</a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn &#x2197;</a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>&copy; 2026 Velora Studio. All rights reserved.</span>
+    <span>Crafted with light, travertine &amp; patience.</span>
+    <span style="cursor:pointer;" onclick="window.scrollTo({top:0, behavior:'smooth'})">Back to Top &#x2191;</span>
+  </div>
+</footer>
+
+<!-- MODAL 1: PROJECT DETAIL MODAL -->
+<div class="modal-backdrop" id="projectModal">
+  <div class="modal-container">
+    <button class="modal-close" onclick="closeModal('projectModal')">&#x2715;</button>
+    <div class="project-modal-body">
+      <div class="pm-gallery">
+        <img id="pmImage" src="" alt="Project View">
+      </div>
+      <div class="pm-info">
+        <div class="eyebrow" id="pmSub">Signature Project</div>
+        <h3 id="pmTitle">Project Title</h3>
+        <p id="pmDesc">Project detail description.</p>
+        <div class="pm-specs">
+          <div class="pm-spec"><span class="lbl">Location</span><div class="val" id="pmLoc">Location</div></div>
+          <div class="pm-spec"><span class="lbl">Concept</span><div class="val" id="pmConcept">Concept</div></div>
+          <div class="pm-spec"><span class="lbl">Area</span><div class="val" id="pmArea">Area</div></div>
+          <div class="pm-spec"><span class="lbl">Completed</span><div class="val" id="pmYear">Year</div></div>
+        </div>
+        <button class="btn btn-gold" onclick="closeModal('projectModal'); document.getElementById('consultation').scrollIntoView({behavior:'smooth'})">Inquire About This Design &#x2197;</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 2: MATERIAL LIGHTBOX MODAL -->
+<div class="modal-backdrop" id="materialModal">
+  <div class="modal-container" style="max-width: 650px;">
+    <button class="modal-close" onclick="closeModal('materialModal')">&#x2715;</button>
+    <div style="padding: 40px; text-align: center;">
+      <div style="width: 100%; height: 280px; overflow: hidden; border-radius: 2px; border: 1px solid var(--gold-line); margin-bottom: 24px;">
+        <img id="matModalImg" src="" alt="Material Specimen" style="width:100%; height:100%; object-fit:cover;">
+      </div>
+      <div class="eyebrow" id="matModalOrigin" style="justify-content: center; margin-bottom: 10px;">Origin</div>
+      <h3 id="matModalTitle" style="font-family: var(--serif); font-style: italic; font-size: 32px; font-weight: 300; margin-bottom: 12px;">Material Name</h3>
+      <p id="matModalDesc" style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 28px;">Material breakdown description.</p>
+      <button class="btn btn-gold" onclick="requestSampleBox()">Request Physical Sample Box &#x2197;</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 3: GENERAL IMAGE LIGHTBOX -->
+<div class="modal-backdrop" id="lightboxModal">
+  <div class="modal-container" style="max-width: 900px; background: transparent; border: none; box-shadow: none;">
+    <button class="modal-close" onclick="closeModal('lightboxModal')">&#x2715;</button>
+    <div style="width:100%; text-align:center;">
+      <img id="lbImage" src="" alt="Lightbox View" style="max-height: 80vh; max-width: 100%; object-fit: contain; margin: 0 auto; border: 1px solid var(--gold-line); border-radius: 2px;">
+      <h4 id="lbTitle" style="font-family: var(--serif); font-style: italic; font-size: 26px; color: #fff; margin-top: 16px; font-weight: 300;"></h4>
+      <p id="lbDesc" style="font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 6px;"></p>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 4: TEAM MEMBER PROFILE MODAL -->
+<div class="team-modal-backdrop" id="teamModal">
+  <div class="team-modal-content">
+    <button class="tm-close" onclick="closeTeamModal()">&#x2715;</button>
+    <div class="tm-left">
+      <img id="tmImg" src="" alt="Team Portrait">
+    </div>
+    <div class="tm-right">
+      <div>
+        <div class="tm-role" id="tmRole">Designation</div>
+        <h3 class="tm-name" id="tmName">Member Name</h3>
+        <p class="tm-bio" id="tmBio">Biography details.</p>
+        <div class="tm-stats">
+          <div class="tm-stat"><span class="lbl">Experience</span><div class="val" id="tmExp">15 Years</div></div>
+          <div class="tm-stat"><span class="lbl">Specialization</span><div class="val" id="tmSpec">Estates</div></div>
+          <div class="tm-stat"><span class="lbl">Portfolios</span><div class="val" id="tmProjects">80+</div></div>
+        </div>
+      </div>
+      <button class="btn btn-gold" onclick="closeTeamModal(); document.getElementById('consultation').scrollIntoView({behavior:'smooth'})">Book Private Briefing &#x2197;</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 4: CONSULTATION SUCCESS DIALOG -->
+<div class="modal-backdrop" id="consultationSuccessModal">
+  <div class="modal-container success-modal-content">
+    <button class="modal-close" onclick="closeModal('consultationSuccessModal')">&#x2715;</button>
+    <div class="success-icon">&#x2713;</div>
+    <h3>Consultation Brief Received</h3>
+    <p>Thank you for entrusting Velora Studio with your vision. Our principal partner will review your inquiry and contact you within 24 hours.</p>
+    <div class="ref-box">CONFIRMATION REF: <span id="refCode">VEL-2026-9841</span></div>
+    <button class="btn btn-gold" onclick="closeModal('consultationSuccessModal')">Return to Studio Website</button>
+  </div>
+</div>
+
+<!-- JAVASCRIPT CODE -->
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* MULTILINGUAL KINETIC PRELOADER (PROGRESS-SYNCHRONIZED) */
+window.addEventListener('load', () => {
+  let prog = 0;
+  let currentIdx = -1;
+  const bar   = document.getElementById('plBar');
+  const count = document.getElementById('plCount');
+  const plText = document.getElementById('plText');
+
+  const loaderTexts = [
+    "Velora Studio",
+    "वेलोरा स्टूडियो",
+    "வெலோரா ஸ்டுடியோ",
+    "వెలోరా స్టూడియో",
+    "ベロラ・スタジオ",
+    "استوديو فيلورا",
+    "Студия Велора"
+  ];
+
+  const iv = setInterval(() => {
+    // Unhurried luxury pace so each language is readable (~4.2 sec total)
+    prog += 1.4 + Math.random() * 0.8;
+    if (prog >= 100) { prog = 100; clearInterval(iv); }
+
+    bar.style.width = prog + '%';
+    count.textContent = Math.floor(prog) + '%';
+
+    // Synchronize language text directly with loading percentage brackets
+    const targetIdx = Math.min(loaderTexts.length - 1, Math.floor((prog / 100) * loaderTexts.length));
+
+    if (targetIdx !== currentIdx) {
+      currentIdx = targetIdx;
+      gsap.to(plText, {
+        opacity: 0, y: -8, filter: 'blur(5px)', duration: 0.14,
+        onComplete: () => {
+          plText.textContent = loaderTexts[targetIdx];
+          gsap.fromTo(plText,
+            { opacity: 0, y: 8, filter: 'blur(5px)' },
+            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.22, ease: 'power2.out' }
+          );
+        }
+      });
+    }
+
+    if (prog >= 100) {
+      clearInterval(iv);
+      setTimeout(() => {
+        plText.textContent = "Velora Studio";
+        gsap.to('#preloader', {
+          opacity: 0, duration: 0.8, ease: 'power2.out',
+          onComplete: () => {
+            document.getElementById('preloader').style.display = 'none';
+            ScrollTrigger.refresh();
+          }
+        });
+        heroIntro();
+      }, 450);
+    }
+  }, 65);
+});
+
+function heroIntro() {
+  gsap.timeline({ delay: 0.2 })
+    .from('#heroTitle', { x: -60, duration: 1.4, ease: 'power4.out', opacity: 0 })
+    .from('.hero-bottom-bar', { opacity: 0, duration: 0.8 }, '-=0.5');
+}
+
+/* NAVBAR SCROLL */
+window.addEventListener('scroll', () => {
+  document.getElementById('siteNav').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+
+
+/* JOURNEY HORIZONTAL SCROLL */
+(function() {
+  const pin   = document.getElementById('journeyPin');
+  const track = document.getElementById('journeyTrack');
+  const dist  = () => track.scrollWidth - pin.offsetWidth;
+  ScrollTrigger.create({
+    trigger: pin, start: 'top top', end: () => '+=' + dist(),
+    pin: true, scrub: 1,
+    onUpdate: self => gsap.set(track, { x: -self.progress * dist() })
+  });
+  window.addEventListener('resize', () => ScrollTrigger.refresh());
+})();
+
+/* PROJECT REVEALS */
+document.querySelectorAll('.project').forEach(p => {
+  gsap.from(p.querySelector('.project-media'), {
+    opacity: 0, scale: 1.05, duration: 1.3, ease: 'power3.out',
+    scrollTrigger: { trigger: p, start: 'top 78%' }
+  });
+  gsap.from(p.querySelectorAll('.project-info > *'), {
+    opacity: 0, y: 35, duration: 0.9, stagger: 0.1, ease: 'power3.out',
+    scrollTrigger: { trigger: p, start: 'top 75%' }
+  });
+});
+
+/* BEFORE/AFTER DRAG SLIDER */
+(function() {
+  const slider     = document.getElementById('baSlider');
+  const beforeWrap = document.getElementById('baBeforeWrap');
+  const handle     = document.getElementById('baHandle');
+  let dragging = false;
+
+  function setPos(clientX) {
+    const rect = slider.getBoundingClientRect();
+    let pct = ((clientX - rect.left) / rect.width) * 100;
+    pct = Math.max(2, Math.min(98, pct));
+    beforeWrap.style.width = pct + '%';
+    handle.style.left = pct + '%';
+
+    const tagBefore = document.getElementById('baTagBefore');
+    const tagAfter  = document.getElementById('baTagAfter');
+    if (tagBefore && tagAfter) {
+      tagBefore.style.opacity = pct < 15 ? (pct / 15) : 1;
+      tagAfter.style.opacity  = pct > 85 ? ((100 - pct) / 15) : 1;
+    }
+  }
+  slider.addEventListener('mousedown',  e => { dragging = true; setPos(e.clientX); });
+  window.addEventListener('mousemove',  e => { if (dragging) setPos(e.clientX); });
+  window.addEventListener('mouseup',    () => dragging = false);
+  slider.addEventListener('touchstart', e => { dragging = true; setPos(e.touches[0].clientX); }, { passive: true });
+  slider.addEventListener('touchmove',  e => { if (dragging) setPos(e.touches[0].clientX); }, { passive: true });
+  window.addEventListener('touchend',   () => dragging = false);
+})();
+
+/* PHOTO TEAR REVEAL LUXURY REVIEW EXPERIENCE DATA & LOGIC */
+const reviewsData = [
+  {
+    name: "Ananya & Devraj Kapoor",
+    sub: "Mumbai, India • Altamount Road Sky Penthouse",
+    project: "Altamount Villa",
+    title: "A Sanctuary Built Around Light & Tranquility",
+    desc: "Velora didn't just design our sea-facing Mumbai penthouse — they understood how our family moves through light and silence. Living here feels like living inside a masterwork rendered in travertine stone and patinated brass.",
+    avatar: "reviews/istockphoto-1191927378-612x612.jpg",
+    heroImg: "reviews/istockphoto-1191927378-612x612.jpg",
+    area: "1,450 m²", year: "2025", duration: "14 Months"
+  },
+  {
+    name: "Rajesh & Sunita Mehta",
+    sub: "New Delhi, India • Lutyens Heritage Estate",
+    project: "Lutyens Manor",
+    title: "The Manor Layout Feels Inevitable & Majestic",
+    desc: "Every single material choice felt deeply considered. Matte steel, smoked Austrian oak, and Nero Marquina marble created an atmosphere of quiet prestige. It could never have been styled any other way.",
+    avatar: "reviews/istockphoto-1197450796-612x612.jpg",
+    heroImg: "reviews/istockphoto-1197450796-612x612.jpg",
+    area: "2,100 m²", year: "2024", duration: "16 Months"
+  },
+  {
+    name: "Devika Sengupta",
+    sub: "Bengaluru, India • Indiranagar Sky Villa",
+    project: "Garden Atelier",
+    title: "A White-Glove Masterclass in Modern Restraint",
+    desc: "The process was as beautiful as the result — calm, precise, and never rushed. Velora integrated our green courtyard with floating bronze elements that take our breath away daily.",
+    avatar: "reviews/istockphoto-1336665574-612x612.jpg",
+    heroImg: "reviews/istockphoto-1336665574-612x612.jpg",
+    area: "980 m²", year: "2025", duration: "11 Months"
+  },
+  {
+    name: "Vikramaditya & Priya Singhania",
+    sub: "Goa, India • Candolim Oceanfront Sanctuary",
+    project: "Casa De Goa",
+    title: "Feels Like It Has Stood for a Century by the Ocean",
+    desc: "Our coastal villa carved into raw limestone and linen feels like a hundred-year sanctuary. The sunset light reflection across the travertine living room is unmatched.",
+    avatar: "reviews/istockphoto-1350859198-612x612.jpg",
+    heroImg: "reviews/istockphoto-1350859198-612x612.jpg",
+    area: "1,850 m²", year: "2024", duration: "15 Months"
+  },
+  {
+    name: "Marcus Wen",
+    sub: "Dubai, UAE • Urban Sanctuary",
+    project: "Penthouse Noir",
+    title: "Discreet, Exacting, and Globally Sophisticated",
+    desc: "Velora showed endless patience with our ever-evolving brief in Dubai. They curated hand-woven silks, raw terracotta, and patinated brass fixtures that embrace the skyline sunset seamlessly.",
+    avatar: "reviews/istockphoto-1350859204-612x612.jpg",
+    heroImg: "reviews/istockphoto-1350859204-612x612.jpg",
+    area: "860 m²", year: "2024", duration: "10 Months"
+  },
+  {
+    name: "Aarav & Kavya Reddy",
+    sub: "Hyderabad, India • Jubilee Hills Mansion",
+    project: "Reddy Residence",
+    title: "Nothing Shouts, Yet Everything Captivates",
+    desc: "A masterclass in spatial restraint. Nothing shouts or competes for attention, yet every single corner feels extraordinary. The integration of smoked timber and concealed ambient lighting is pure genius.",
+    avatar: "reviews/istockphoto-1402842996-612x612.jpg",
+    heroImg: "reviews/istockphoto-1402842996-612x612.jpg",
+    area: "2,400 m²", year: "2025", duration: "18 Months"
+  },
+  {
+    name: "Isabelle & Henri Roux",
+    sub: "Cap Ferrat, France • Coastal Minimalist",
+    project: "Villa Aurelio",
+    title: "Translating a Vision Into Timeless Architecture",
+    desc: "They translated an abstract feeling of tranquility into a physical residence. I still can't quite explain how Velora managed to balance vibrant art collections with serene travertine surfaces so seamlessly.",
+    avatar: "reviews/istockphoto-1402843460-612x612.jpg",
+    heroImg: "reviews/istockphoto-1402843460-612x612.jpg",
+    area: "1,240 m²", year: "2025", duration: "14 Months"
+  },
+  {
+    name: "Rohan & Meera Malhotra",
+    sub: "Gurugram, India • Golf Course Road Duplex",
+    project: "Malhotra Atelier",
+    title: "Stops Visitors Mid-Step in Awe",
+    desc: "Our private living salon now stops guests mid-step. Velora mastered the diffusion of natural light, utilizing fluted glass, brushed bronze, and Italian wool upholstery that creates pure magic.",
+    avatar: "reviews/istockphoto-1835966264-612x612.jpg",
+    heroImg: "reviews/istockphoto-1835966264-612x612.jpg",
+    area: "1,120 m²", year: "2025", duration: "12 Months"
+  },
+  {
+    name: "Lord James Whitfield",
+    sub: "London, UK • Mayfair Private Residence",
+    project: "Mayfair Townhouse",
+    title: "White-Glove Perfection From First Sketch",
+    desc: "White-glove service from the initial moodboard to the final silk cushion placement. Adrian Voss and his architecture team transformed our townhouse into a modern architectural masterpiece.",
+    avatar: "reviews/istockphoto-2200868899-612x612.jpg",
+    heroImg: "reviews/istockphoto-2200868899-612x612.jpg",
+    area: "1,520 m²", year: "2023", duration: "20 Months"
+  },
+  {
+    name: "Nadia & Tariq Farouk",
+    sub: "Doha, Qatar • Royal Oasis",
+    project: "Al Maha Estate",
+    title: "A Studio That Listens More Than It Presents",
+    desc: "Velora is a rare studio that listens deeply before drawing a single line. The residence feels entirely ours, infused with timeless European craftsmanship and bespoke architectural grandeur.",
+    avatar: "reviews/istockphoto-2202661446-612x612.jpg",
+    heroImg: "reviews/istockphoto-2202661446-612x612.jpg",
+    area: "3,100 m²", year: "2025", duration: "24 Months"
+  }
+];
+
+let activeReviewIdx = 0;
+
+/* SCROLLTRIGGER PINNED TEAR CONTROL WITH SYNCHRONIZED REVIEW TEXT SLIDING */
+(function setupReviewTearScroll() {
+  const section = document.getElementById('reviews');
+  const pinWrap = document.getElementById('reviewsPinContainer');
+  if (!section || !pinWrap) return;
+
+  const totalReviews = reviewsData.length;
+
+  ScrollTrigger.create({
+    trigger: section,
+    start: 'top top',
+    end: () => '+=' + (totalReviews * 650),
+    pin: pinWrap,
+    scrub: 0.6,
+    onUpdate: self => {
+      const rawProgress = self.progress * (totalReviews - 1);
+      const newIndex = Math.min(totalReviews - 1, Math.floor(rawProgress));
+      const stepProg = rawProgress - newIndex;
+
+      if (newIndex !== activeReviewIdx) {
+        activeReviewIdx = newIndex;
+        updateReviewText(newIndex);
+        updateDots(newIndex);
+      }
+
+      animateTearStep(stepProg, newIndex);
+    }
+  });
+})();
+
+function animateTearStep(progress, currentIdx) {
+  const leftHalf  = document.getElementById('tearHalfLeft');
+  const rightHalf = document.getElementById('tearHalfRight');
+  const underImg  = document.getElementById('revUnderImg');
+  const tearLeftImg  = document.getElementById('revTearImgLeft');
+  const tearRightImg = document.getElementById('revTearImgRight');
+
+  const curr = reviewsData[currentIdx];
+  const next = reviewsData[Math.min(reviewsData.length - 1, currentIdx + 1)];
+
+  if (tearLeftImg.src !== location.origin + '/' + curr.heroImg && !tearLeftImg.src.endsWith(curr.heroImg)) {
+    tearLeftImg.src = curr.heroImg;
+    tearRightImg.src = curr.heroImg;
+  }
+  if (underImg.src !== location.origin + '/' + next.heroImg && !underImg.src.endsWith(next.heroImg)) {
+    underImg.src = next.heroImg;
+  }
+
+  // 3D Paper Tear Physics
+  const rotY = progress * 40;
+  const transX = progress * 180;
+  const rotZ = progress * 9;
+  const transY = progress * 45;
+  const opacity = 1 - Math.pow(progress, 1.8);
+
+  gsap.set(leftHalf, {
+    rotateY: -rotY,
+    translateX: -transX,
+    rotateZ: -rotZ,
+    translateY: transY,
+    opacity: opacity,
+    transformPerspective: 1800
+  });
+
+  gsap.set(rightHalf, {
+    rotateY: rotY,
+    translateX: transX,
+    rotateZ: rotZ,
+    translateY: transY,
+    opacity: opacity,
+    transformPerspective: 1800
+  });
+
+  const scale = 0.94 + progress * 0.06;
+  gsap.set(underImg, { scale: scale, opacity: 0.65 + progress * 0.35 });
+
+  // SLIDING REVIEW TEXT IN SYNC WITH TEAR:
+  const textTitle = document.getElementById('revTitle');
+  const textDesc  = document.getElementById('revDesc');
+  const textMeta  = document.querySelectorAll('.rev-meta-block, .rev-stats-grid');
+
+  if (progress < 0.5) {
+    // Current text slides left smoothly as photo starts tearing
+    const slideOutX = -progress * 60;
+    const alpha = 1 - progress * 1.5;
+    gsap.set([textTitle, textDesc, ...textMeta], { x: slideOutX, opacity: Math.max(0, alpha) });
+  } else {
+    // Next text slides into position from right as photo tear finishes
+    const slideInX = (1 - progress) * 60;
+    const alpha = (progress - 0.5) * 2;
+    gsap.set([textTitle, textDesc, ...textMeta], { x: slideInX, opacity: Math.min(1, alpha) });
+  }
+}
+
+function updateReviewText(idx) {
+  const d = reviewsData[idx];
+  document.getElementById('revCounterBadge').textContent = `REVIEW 0${idx + 1} / 10`;
+  document.getElementById('revTitle').innerHTML = d.title.replace('&', '&amp;');
+  document.getElementById('revDesc').textContent = d.desc;
+  document.getElementById('revAvatar').src = d.avatar;
+  document.getElementById('revClientName').textContent = d.name;
+  document.getElementById('revClientSub').textContent = d.sub;
+  document.getElementById('revStatArea').textContent = d.area;
+  document.getElementById('revStatYear').textContent = d.year;
+  document.getElementById('revStatDuration').textContent = d.duration;
+}
+
+function updateDots(idx) {
+  const dots = document.querySelectorAll('.rev-dot');
+  dots.forEach((dot, i) => dot.classList.toggle('active', i === idx));
+}
+
+function openActiveReviewModal() {
+  const d = reviewsData[activeReviewIdx];
+  openLightbox(d.heroImg, `${d.name} — ${d.project}`, d.desc);
+}
+
+/* BESPOKE ESTIMATOR CONFIGURATOR (INR / USD SUPPORT) */
+let currentCurrency = 'INR';
+
+const estState = {
+  location: 'mumbai',
+  type: 'penthouse',
+  theme: 'coastal',
+  area: 450,
+  level: 'bespoke'
+};
+
+function setCurrency(curr) {
+  currentCurrency = curr;
+  document.getElementById('currBtnINR').classList.toggle('active', curr === 'INR');
+  document.getElementById('currBtnUSD').classList.toggle('active', curr === 'USD');
+  updateEstimator();
+}
+
+function selectEstOpt(el, key, val) {
+  const parent = el.parentElement;
+  parent.querySelectorAll('.est-opt').forEach(opt => opt.classList.remove('active'));
+  el.classList.add('active');
+  estState[key] = val;
+  updateEstimator();
+}
+
+function updateEstimator() {
+  const slider = document.getElementById('estAreaSlider');
+  estState.area = parseInt(slider.value, 10);
+  const sqft = Math.round(estState.area * 10.764);
+  document.getElementById('estAreaVal').textContent = `${sqft.toLocaleString()} sq ft (${estState.area} m²)`;
+
+  // Base pricing logic (in INR per sq ft)
+  let basePriceSqFt = 4500;
+  if (estState.location === 'mumbai' || estState.location === 'delhi') basePriceSqFt *= 1.3;
+  if (estState.location === 'dubai' || estState.location === 'london') basePriceSqFt *= 1.4;
+  if (estState.type === 'villa') basePriceSqFt *= 1.15;
+  if (estState.type === 'estate') basePriceSqFt *= 1.3;
+  if (estState.theme === 'noir') basePriceSqFt += 800;
+  if (estState.theme === 'heritage') basePriceSqFt += 1200;
+  if (estState.level === 'atelier') basePriceSqFt *= 1.35;
+  if (estState.level === 'gallery') basePriceSqFt *= 1.7;
+
+  const totalMinINR = Math.round((sqft * basePriceSqFt) / 100000) * 100000;
+  const totalMaxINR = Math.round((totalMinINR * 1.35) / 100000) * 100000;
+
+  if (currentCurrency === 'INR') {
+    const fmtINR = (val) => {
+      if (val >= 10000000) {
+        return `₹${(val / 10000000).toFixed(2)} Cr`;
+      } else {
+        return `₹${(val / 100000).toFixed(0)} Lakhs`;
+      }
+    };
+    document.getElementById('estBudgetRes').textContent = `${fmtINR(totalMinINR)} – ${fmtINR(totalMaxINR)}`;
+  } else {
+    // USD conversion (~85 INR per USD)
+    const minUSD = totalMinINR / 85;
+    const maxUSD = totalMaxINR / 85;
+    const fmtUSD = (val) => (val >= 1000000) ? `$${(val / 1000000).toFixed(1)}M` : `$${(val / 1000).toFixed(0)}K`;
+    document.getElementById('estBudgetRes').textContent = `${fmtUSD(minUSD)} – ${fmtUSD(maxUSD)} USD`;
+  }
+
+  let months = Math.max(5, Math.round(estState.area / 75));
+  document.getElementById('estTimeRes').textContent = `${months} – ${months + 3} Months`;
+
+  if (estState.theme === 'coastal') {
+    document.getElementById('estMatsRes').textContent = "Roman Travertine, Hand-Patinated Brass, Pure Italian Linen, Bleached Oak.";
+  } else if (estState.theme === 'noir') {
+    document.getElementById('estMatsRes').textContent = "Nero Marquina Marble, Smoked Alpine Oak, Matte Black Steel, Tuscan Leather.";
+  } else {
+    document.getElementById('estMatsRes').textContent = "Indian Teak Wood, Alpine Limestone, Murano Fluted Glass, Aged Bronze.";
+  }
+}
+
+function transferEstimateToForm() {
+  document.getElementById('visionText').value = `Bespoke Estimator Inquiry:\nLocation: ${estState.location.toUpperCase()}\nProperty: ${estState.type.toUpperCase()}\nTheme: ${estState.theme.toUpperCase()}\nArea: ${Math.round(estState.area * 10.764)} sq ft (${estState.area} m²)\nLevel: ${estState.level.toUpperCase()}\nEstimated Investment: ${document.getElementById('estBudgetRes').textContent}`;
+  document.getElementById('consultation').scrollIntoView({ behavior: 'smooth' });
+}
+
+/* PROJECT MODAL DATA */
+const projectsData = {
+  aurelio: {
+    title: 'Villa Aurelio',
+    sub: 'Signature Coastal Residence',
+    desc: 'A magnificent coastal villa situated along Positano cliffs. Features floor-to-ceiling glass walls, hand-carved travertine columns, and custom brushed brass lighting installations designed to capture Mediterranean sunsets.',
+    loc: 'Positano, Italy',
+    concept: 'Coastal Minimalism',
+    area: '1,240 m²',
+    year: '2025',
+    img: 'designs/HD-wallpaper-luxury-interior-design-living-room-gold-metal-fixtures-black-marble-walls-gray-marble-floor-in-the-living-room.jpg'
+  },
+  noir: {
+    title: 'Penthouse Noir',
+    sub: 'Urban Triplex Sanctuary',
+    desc: 'Spanning the top three floors of Dubai’s premier residential tower. Designed with matte dark steel, smoked Austrian oak, and rare Nero Marquina marble floors. Pools of golden warm light create intimate zones in a high-sky venue.',
+    loc: 'Dubai, UAE',
+    concept: 'Urban Sanctuary',
+    area: '860 m²',
+    year: '2024',
+    img: 'designs/pexels-ranamatloob567-35203563.jpg'
+  },
+  ivoire: {
+    title: 'Maison Ivoire',
+    sub: 'Alpine Chalet Estate',
+    desc: 'Nestled in the French Alps, Maison Ivoire blends classical European limestone architecture with modern linen and timber minimalism. Designed for warmth during snowbound winter months.',
+    loc: 'Courchevel, France',
+    concept: 'Alpine Serenity',
+    area: '1,980 m²',
+    year: '2023',
+    img: 'designs/luxury_house_interior-wallpaper-2560x1600.jpg'
+  },
+  velasco: {
+    title: 'Casa Velasco',
+    sub: 'Mediterranean Seaside Manor',
+    desc: 'An expansive oceanfront estate boasting terracotta arches, hand-woven silk drapery, and private courtyard pools seamlessly connecting indoor living with sea breezes.',
+    loc: 'Marbella, Spain',
+    concept: 'Mediterranean Warmth',
+    area: '2,200 m²',
+    year: '2025',
+    img: 'designs/photo-1590381105924-c72589b9ef3f.avif'
+  }
+};
+
+function openProjectModal(key) {
+  const data = projectsData[key];
+  if (!data) return;
+  document.getElementById('pmTitle').textContent = data.title;
+  document.getElementById('pmSub').textContent = data.sub;
+  document.getElementById('pmDesc').textContent = data.desc;
+  document.getElementById('pmLoc').textContent = data.loc;
+  document.getElementById('pmConcept').textContent = data.concept;
+  document.getElementById('pmArea').textContent = data.area;
+  document.getElementById('pmYear').textContent = data.year;
+  document.getElementById('pmImage').src = data.img;
+
+  document.getElementById('projectModal').classList.add('active');
+}
+
+function openMaterialModal(title, origin, desc, img) {
+  document.getElementById('matModalTitle').textContent = title;
+  document.getElementById('matModalOrigin').textContent = `Provenance: ${origin}`;
+  document.getElementById('matModalDesc').textContent = desc;
+  document.getElementById('matModalImg').src = img;
+  document.getElementById('materialModal').classList.add('active');
+}
+
+function requestSampleBox() {
+  closeModal('materialModal');
+  const matName = document.getElementById('matModalTitle').textContent;
+  document.getElementById('visionText').value = `Sample Box Request for Material: ${matName}`;
+  document.getElementById('consultation').scrollIntoView({ behavior: 'smooth' });
+}
+
+function openLightbox(img, title, desc) {
+  document.getElementById('lbImage').src = img;
+  document.getElementById('lbTitle').textContent = title || '';
+  document.getElementById('lbDesc').textContent = desc || '';
+  document.getElementById('lightboxModal').classList.add('active');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+}
+
+/* STATS ANIMATION */
+document.querySelectorAll('.stat .num').forEach(el => {
+  const target = parseInt(el.dataset.count, 10);
+  const suffix = el.dataset.suffix || '';
+  ScrollTrigger.create({
+    trigger: el, start: 'top 88%', once: true,
+    onEnter: () => {
+      let obj = { val: 0 };
+      gsap.to(obj, {
+        val: target, duration: 2.2, ease: 'power2.out',
+        onUpdate: () => { el.textContent = Math.floor(obj.val) + suffix; }
+      });
+    }
+  });
+});
+
+/* FORM SUBMISSION */
+function handleFormSubmit(e) {
+  e.preventDefault();
+  const randNum = Math.floor(1000 + Math.random() * 9000);
+  document.getElementById('refCode').textContent = `VEL-2026-${randNum}`;
+  document.getElementById('consultationSuccessModal').classList.add('active');
+  document.getElementById('consultForm').reset();
+}
+
+/* FEATURED INTERIOR COLLECTION - 3D WAVE FLIP GALLERY LOGIC */
+const featuredCollections = [
+  {
+    name: "01 \u2022 RESIDENCES",
+    items: [
+      { title: "Villa Aurelio Living Salon", loc: "Positano, Italy", year: "2025", area: "1,240 m²", img: "designs/HD-wallpaper-luxury-interior-design-living-room-gold-metal-fixtures-black-marble-walls-gray-marble-floor-in-the-living-room.jpg", key: "aurelio" },
+      { title: "Maison Ivoire Master Suite", loc: "Courchevel, France", year: "2024", area: "980 m²", img: "designs/luxury_house_interior-wallpaper-2560x1600.jpg", key: "ivoire" },
+      { title: "Casa Velasco Garden Pavilion", loc: "Marbella, Spain", year: "2025", area: "2,200 m²", img: "designs/photo-1590381105924-c72589b9ef3f.avif", key: "velasco" },
+      { title: "Penthouse Noir Lounge", loc: "Dubai, UAE", year: "2024", area: "860 m²", img: "designs/pexels-ranamatloob567-35203563.jpg", key: "noir" },
+      { title: "Alpine Timber Residence", loc: "Gstaad, Switzerland", year: "2025", area: "1,150 m²", img: "designs/HD-wallpaper-living-room-modern-interior-design-stylish-interior-design-of-the-living-room-gray-green-living-room-luxurious-interiors.jpg" },
+      { title: "Sculptural Marble Foyer", loc: "London, UK", year: "2023", area: "740 m²", img: "designs/into-exclusive-waiting-room-interior-luxury-interior.jpg" },
+      { title: "Elle Decor Gallery Suite", loc: "Paris, France", year: "2024", area: "1,320 m²", img: "designs/Interior-decorating-websites-inspiration-Elle-Decor-750x.jpg" },
+      { title: "Velora Travertine Living Salon", loc: "Monaco", year: "2026", area: "1,450 m²", img: "designs/room_after_renovation.png" },
+      { title: "Belgravia Private Sanctuary", loc: "London, UK", year: "2025", area: "1,600 m²", img: "designs/thumb-1920-1112032.jpg" },
+      { title: "Palazzo Gold Residence", loc: "Milan, Italy", year: "2024", area: "1,100 m²", img: "designs/home-interior-living-room-picture-wallpaper-preview.jpg" },
+      { title: "Kyoto Bamboo Atelier", loc: "Kyoto, Japan", year: "2025", area: "920 m²", img: "designs/luxury-interior-design-wallpaper-preview.jpg" },
+      { title: "Cap Ferrat Oceanfront Villa", loc: "Cap Ferrat, France", year: "2025", area: "2,100 m²", img: "designs/photo-1618221195710-dd6b41faaea6.avif" }
+    ]
+  },
+  {
+    name: "02 \u2022 SKY PENTHOUSES",
+    items: [
+      { title: "Penthouse Noir Sky Bar", loc: "Dubai, UAE", year: "2025", area: "860 m²", img: "designs/pexels-ranamatloob567-35203563.jpg", key: "noir" },
+      { title: "Manhattan Skyline Triplex", loc: "New York, USA", year: "2024", area: "1,420 m²", img: "designs/photo-1507652313519-d4e9174996dd.avif" },
+      { title: "Singapore Marina Bay Penthouse", loc: "Singapore", year: "2025", area: "950 m²", img: "designs/photo-1663811397561-32239541a455.avif" },
+      { title: "Ginza Sky Sanctuary", loc: "Tokyo, Japan", year: "2024", area: "780 m²", img: "designs/photo-1686056040167-1e3dead46d9a.avif" },
+      { title: "Zurich Lake View Duplex", loc: "Zurich, Switzerland", year: "2025", area: "1,100 m²", img: "designs/photo-1696986681436-f5ee12981bc9.avif" },
+      { title: "Mayfair Sky Villa", loc: "London, UK", year: "2024", area: "1,250 m²", img: "designs/premium_photo-1661902468735-eabf780f8ff6.avif" },
+      { title: "Beverly Hills Glass Penthouse", loc: "Los Angeles, USA", year: "2025", area: "1,800 m²", img: "designs/premium_photo-1661962461938-b3a74097d946.avif" },
+      { title: "Hong Kong Peak Residence", loc: "Hong Kong", year: "2024", area: "1,050 m²", img: "designs/premium_photo-1681487208776-e308bfaa0539.avif" },
+      { title: "Cap d'Antibes Cliffside Villa", loc: "Antibes, France", year: "2025", area: "2,400 m²", img: "designs/photo-1613545325278-f24b0cae1224.avif" },
+      { title: "St. Moritz Chalet Lounge", loc: "St. Moritz, Switzerland", year: "2024", area: "1,650 m²", img: "designs/photo-1631889993959-41b4e9c6e3c5.avif" },
+      { title: "Sydney Harbor Horizon Villa", loc: "Sydney, Australia", year: "2025", area: "1,350 m²", img: "designs/photo-1632583824020-937ae9564495.avif" },
+      { title: "Malibu Oceanfront Retreat", loc: "Malibu, USA", year: "2025", area: "1,900 m²", img: "designs/photo-1653972233739-667468bbd5a9.avif" }
+    ]
+  },
+  {
+    name: "03 \u2022 COASTAL & ESTATES",
+    items: [
+      { title: "Casa Velasco Terracotta Courtyard", loc: "Marbella, Spain", year: "2025", area: "2,200 m²", img: "designs/photo-1590381105924-c72589b9ef3f.avif", key: "velasco" },
+      { title: "Courchevel Alpine Fireplace", loc: "Courchevel, France", year: "2024", area: "1,980 m²", img: "designs/luxury_house_interior-wallpaper-2560x1600.jpg", key: "ivoire" },
+      { title: "Amalfi Cliffside Pavilion", loc: "Amalfi, Italy", year: "2025", area: "1,380 m²", img: "designs/HD-wallpaper-luxury-interior-design-living-room-gold-metal-fixtures-black-marble-walls-gray-marble-floor-in-the-living-room.jpg", key: "aurelio" },
+      { title: "Velora Atelier Painting Salon", loc: "Paris, France", year: "2024", area: "890 m²", img: "designs/woman_painting_velora.png" },
+      { title: "Mykonos White Stone Estate", loc: "Mykonos, Greece", year: "2025", area: "1,750 m²", img: "designs/into-exclusive-waiting-room-interior-luxury-interior.jpg" },
+      { title: "Tuscan Olive Grove Manor", loc: "Florence, Italy", year: "2024", area: "2,600 m²", img: "designs/Interior-decorating-websites-inspiration-Elle-Decor-750x.jpg" },
+      { title: "Lake Como Marble Terrace", loc: "Lake Como, Italy", year: "2026", area: "1,550 m²", img: "designs/room_after_renovation.png" },
+      { title: "Ibiza Sunset Villa", loc: "Ibiza, Spain", year: "2025", area: "1,400 m²", img: "designs/thumb-1920-1112032.jpg" },
+      { title: "Aspen Pine Log Residence", loc: "Aspen, USA", year: "2024", area: "1,850 m²", img: "designs/home-interior-living-room-picture-wallpaper-preview.jpg" },
+      { title: "Bari Limestone Villa", loc: "Bari, Italy", year: "2025", area: "1,200 m²", img: "designs/luxury-interior-design-wallpaper-preview.jpg" },
+      { title: "Santorini Cave Residence", loc: "Santorini, Greece", year: "2024", area: "990 m²", img: "designs/photo-1618221195710-dd6b41faaea6.avif" },
+      { title: "Palma de Mallorca Atelier", loc: "Mallorca, Spain", year: "2025", area: "1,620 m²", img: "designs/pexels-ranamatloob567-35203563.jpg" }
+    ]
+  },
+  {
+    name: "04 \u2022 FOYERS & ATELIERS",
+    items: [
+      { title: "Velora Paris Reception Foyer", loc: "Paris, France", year: "2025", area: "740 m²", img: "designs/into-exclusive-waiting-room-interior-luxury-interior.jpg" },
+      { title: "Dubai Financial Centre Lounge", loc: "Dubai, UAE", year: "2024", area: "1,120 m²", img: "designs/interior-design-room-office.jpg" },
+      { title: "Milan Fashion Week Salon", loc: "Milan, Italy", year: "2025", area: "890 m²", img: "designs/Interior-decorating-websites-inspiration-Elle-Decor-750x.jpg" },
+      { title: "Zurich Private Bank Suite", loc: "Zurich, Switzerland", year: "2024", area: "1,450 m²", img: "designs/HD-wallpaper-luxury-interior-design-living-room-gold-metal-fixtures-black-marble-walls-gray-marble-floor-in-the-living-room.jpg" },
+      { title: "Mayfair Private Members Club", loc: "London, UK", year: "2025", area: "1,800 m²", img: "designs/pexels-ranamatloob567-35203563.jpg" },
+      { title: "Geneva Watchmaking Atelier", loc: "Geneva, Switzerland", year: "2024", area: "1,050 m²", img: "designs/luxury_house_interior-wallpaper-2560x1600.jpg" },
+      { title: "Marbella Luxury Hotel Lobby", loc: "Marbella, Spain", year: "2025", area: "3,100 m²", img: "designs/photo-1590381105924-c72589b9ef3f.avif" },
+      { title: "Monaco Yacht Club Salon", loc: "Monaco", year: "2026", area: "1,280 m²", img: "designs/room_after_renovation.png" },
+      { title: "Doha Royal Diplomatic Lounge", loc: "Doha, Qatar", year: "2025", area: "2,400 m²", img: "designs/thumb-1920-1112032.jpg" },
+      { title: "Singapore Rooftop Pavilion", loc: "Singapore", year: "2024", area: "1,150 m²", img: "designs/home-interior-living-room-picture-wallpaper-preview.jpg" },
+      { title: "Tokyo High-Art Gallery", loc: "Tokyo, Japan", year: "2025", area: "850 m²", img: "designs/luxury-interior-design-wallpaper-preview.jpg" },
+      { title: "Cannes Film Salon", loc: "Cannes, France", year: "2025", area: "1,350 m²", img: "designs/photo-1618221195710-dd6b41faaea6.avif" }
+    ]
+  }
+];
+
+let currentCollectionIdx = 0;
+let collectionTimer = null;
+let isFlippingWave = false;
+
+function buildCollectionCards() {
+  const grid = document.getElementById('colGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  
+  const currentSet = featuredCollections[currentCollectionIdx].items;
+  
+  currentSet.forEach((item, i) => {
+    const row = Math.floor(i / 3);
+    const col = i % 3;
+    
+    const card = document.createElement('div');
+    card.className = 'col-card';
+    card.dataset.row = row;
+    card.dataset.col = col;
+    card.dataset.index = i;
+    
+    card.innerHTML = `
+      <div class="col-card-inner" id="colCardInner_${i}">
+        <img class="col-card-img" id="colCardImg_${i}" src="${item.img}" alt="${item.title}">
+        <div class="col-card-overlay"></div>
+        <div class="col-glass-shimmer"></div>
+        <div class="col-flip-sweep" id="colFlipSweep_${i}"></div>
+        <div class="col-card-details" id="colCardDetails_${i}">
+          <span class="col-card-tag">${item.loc} &bull; ${item.year}</span>
+          <h4 class="col-card-title">${item.title}</h4>
+          <div class="col-card-meta">
+            <span>Area: <strong>${item.area}</strong></span>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    // 3D Tilt Hover Effect
+    card.addEventListener('mousemove', (e) => {
+      if (isFlippingWave) return;
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      const rotX = (-y / rect.height) * 14;
+      const rotY = (x / rect.width) * 14;
+      gsap.to(card.querySelector('.col-card-inner'), {
+        rotateX: rotX, rotateY: rotY, scale: 1.03, duration: 0.3, ease: 'power2.out'
+      });
+    });
+    
+    card.addEventListener('mouseleave', () => {
+      if (isFlippingWave) return;
+      gsap.to(card.querySelector('.col-card-inner'), {
+        rotateX: 0, rotateY: 0, scale: 1, duration: 0.5, ease: 'power2.out'
+      });
+    });
+    
+    // Click interaction to open lightbox or project modal
+    card.addEventListener('click', () => {
+      const curItem = featuredCollections[currentCollectionIdx].items[i];
+      if (curItem.key && typeof openProjectModal === 'function') {
+        openProjectModal(curItem.key);
+      } else if (typeof openLightbox === 'function') {
+        openLightbox(curItem.img, curItem.title, `${curItem.loc} \u2014 Architectural Interior Residence (${curItem.area})`);
+      }
+    });
+    
+    grid.appendChild(card);
+  });
+}
+
+function trigger3DWaveFlip(targetIdx) {
+  if (isFlippingWave) return;
+  isFlippingWave = true;
+  
+  const nextSet = featuredCollections[targetIdx];
+  const badgeEl = document.getElementById('colBadge');
+  if (badgeEl) {
+    badgeEl.textContent = `SET 0${targetIdx + 1} / 04 \u2022 ${nextSet.name.split('\u2022')[1].trim()}`;
+  }
+  
+  const btns = document.querySelectorAll('.col-nav-btn');
+  btns.forEach((btn, idx) => btn.classList.toggle('active', idx === targetIdx));
+
+  const cards = document.querySelectorAll('.col-card');
+  let maxDelay = 0;
+  
+  cards.forEach((card, i) => {
+    const row = parseInt(card.dataset.row, 10);
+    const col = parseInt(card.dataset.col, 10);
+    const delay = (row + col) * 0.085;
+    if (delay > maxDelay) maxDelay = delay;
+    
+    const inner = card.querySelector('.col-card-inner');
+    const sweep = card.querySelector('.col-flip-sweep');
+    const nextItem = nextSet.items[i];
+    
+    const tl = gsap.timeline({ delay: delay });
+    
+    tl.to(inner, {
+      rotateY: 90, scale: 0.88, z: -40, duration: 0.35, ease: 'power2.in'
+    })
+    .to(sweep, { opacity: 0.85, duration: 0.2 }, '<')
+    .add(() => {
+      const imgEl = document.getElementById(`colCardImg_${i}`);
+      if (imgEl) imgEl.src = nextItem.img;
+      const details = document.getElementById(`colCardDetails_${i}`);
+      if (details) {
+        details.querySelector('.col-card-tag').innerHTML = `${nextItem.loc} &bull; ${nextItem.year}`;
+        details.querySelector('.col-card-title').textContent = nextItem.title;
+        details.querySelector('.col-card-meta').innerHTML = `<span>Area: <strong>${nextItem.area}</strong></span>`;
+      }
+    })
+    .to(inner, {
+      rotateY: 0, scale: 1, z: 0, duration: 0.45, ease: 'back.out(1.4)'
+    })
+    .to(sweep, { opacity: 0, duration: 0.35 }, '<+=0.1');
+  });
+
+  setTimeout(() => {
+    currentCollectionIdx = targetIdx;
+    isFlippingWave = false;
+  }, (maxDelay + 0.8) * 1000);
+}
+
+function switchCollection(targetIdx) {
+  if (targetIdx === currentCollectionIdx || isFlippingWave) return;
+  pauseCollectionAutoplay();
+  trigger3DWaveFlip(targetIdx);
+  startCollectionAutoplay();
+}
+
+function startCollectionAutoplay() {
+  pauseCollectionAutoplay();
+  collectionTimer = setInterval(() => {
+    const nextIdx = (currentCollectionIdx + 1) % featuredCollections.length;
+    trigger3DWaveFlip(nextIdx);
+  }, 5500);
+}
+
+function pauseCollectionAutoplay() {
+  if (collectionTimer) clearInterval(collectionTimer);
+}
+
+// Setup grid initialization & ScrollTrigger observer
+(function initCollections() {
+  buildCollectionCards();
+  
+  if (typeof ScrollTrigger !== 'undefined') {
+    ScrollTrigger.create({
+      trigger: '#collections',
+      start: 'top 85%',
+      end: 'bottom 15%',
+      onEnter: () => startCollectionAutoplay(),
+      onLeave: () => pauseCollectionAutoplay(),
+      onEnterBack: () => startCollectionAutoplay(),
+      onLeaveBack: () => pauseCollectionAutoplay()
+    });
+  }
+})();
+
+/* SCROLL PROGRESS & CUSTOM GOLD CURSOR & SOUNDSCAPE */
+window.addEventListener('scroll', () => {
+  const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (winScroll / height) * 100;
+  const bar = document.getElementById('scrollProgress');
+  if (bar) bar.style.width = scrolled + '%';
+});
+
+
+
+let audioCtx = null;
+let isSoundOn = false;
+let osc1, osc2, gainNode;
+
+function toggleSoundscape() {
+  const btn = document.getElementById('soundscapeBtn');
+  const statusEl = document.getElementById('soundStatus');
+  
+  if (!isSoundOn) {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    
+    osc1 = audioCtx.createOscillator();
+    osc2 = audioCtx.createOscillator();
+    gainNode = audioCtx.createGain();
+    
+    // Warm luxury ambient drone frequencies (432 Hz tuning / A & E notes)
+    osc1.type = 'sine';
+    osc1.frequency.setValueAtTime(108, audioCtx.currentTime);
+    
+    osc2.type = 'sine';
+    osc2.frequency.setValueAtTime(162, audioCtx.currentTime);
+    
+    gainNode.gain.setValueAtTime(0.001, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.035, audioCtx.currentTime + 2);
+    
+    osc1.connect(gainNode);
+    osc2.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    osc1.start();
+    osc2.start();
+    
+    isSoundOn = true;
+    if (statusEl) statusEl.textContent = 'ON';
+    if (btn) btn.classList.add('active');
+  } else {
+    if (gainNode) {
+      gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1);
+      setTimeout(() => {
+        if (osc1) osc1.stop();
+        if (osc2) osc2.stop();
+      }, 1000);
+    }
+    isSoundOn = false;
+    if (statusEl) statusEl.textContent = 'OFF';
+    if (btn) btn.classList.remove('active');
+  }
+}
+
+/* CINEMATIC 3D CIRCULAR TEAM GALLERY LOGIC & OPTICS */
+const teamMembersData = [
+  {
+    name: "Adrian Voss",
+    role: "Founder & Creative Director",
+    img: "designs/team_member_1.png",
+    exp: "18 Years", spec: "Luxury Estates", projects: "85+ Completed",
+    bio: "Adrian Voss studied architecture in Milan and Paris before founding Velora Studio. His work is celebrated globally for integrating monolithic travertine stone with sculpted natural light."
+  },
+  {
+    name: "Léa Fontaine",
+    role: "Principal Interior Architect",
+    img: "designs/team_member_2.png",
+    exp: "14 Years", spec: "Alpine & Coastal Mansions", projects: "62+ Completed",
+    bio: "Léa brings French classical spatial restraint into modern penthouse interiors. She oversees master floorplans, lighting dynamics, and custom millwork across European estates."
+  },
+  {
+    name: "Kenji Sato",
+    role: "Materials & Atelier Director",
+    img: "designs/team_member_3.png",
+    exp: "16 Years", spec: "Rare Stone & Metallurgy", projects: "110+ Sourced",
+    bio: "Kenji directly negotiates provenance with marble quarries in Tivoli and artisanal brass foundries in Florence, ensuring every material specimen passes natural lighting tests."
+  },
+  {
+    name: "Ananya Kapoor",
+    role: "Senior Spatial Designer",
+    img: "designs/team_member_4.png",
+    exp: "11 Years", spec: "Triplex Penthouses", projects: "45+ Completed",
+    bio: "Specializing in high-sky penthouses across Mumbai and Dubai, Ananya balances raw linen drapery with concealed ambient lighting to construct serene urban havens."
+  },
+  {
+    name: "Sunita Mehta",
+    role: "Heritage Restoration Director",
+    img: "designs/team_member_5.png",
+    exp: "15 Years", spec: "Historical Palaces", projects: "38+ Restored",
+    bio: "Sunita meticulously revives historic moldings and hand-carved teakwood while infusing high-technology climate and lighting controls discreetly."
+  },
+  {
+    name: "Devika Sengupta",
+    role: "Landscape Integration Architect",
+    img: "designs/team_member_6.png",
+    exp: "12 Years", spec: "Courtyard & Biophilic Salons", projects: "50+ Designed",
+    bio: "Devika seamlessly bridges interior living rooms with private botanical courtyards, utilizing bronze water features and floating limestone pavers."
+  },
+  {
+    name: "Priya Singhania",
+    role: "Lighting Architecture Specialist",
+    img: "designs/team_member_7.png",
+    exp: "10 Years", spec: "Atmospheric Light", projects: "70+ Illuminated",
+    bio: "Priya treats light as a physical material. Her lighting schemes calculate solar angles throughout the year to capture golden warm reflections at dusk."
+  },
+  {
+    name: "Marcus Wen",
+    role: "Commercial Atelier Director",
+    img: "designs/team_member_8.png",
+    exp: "13 Years", spec: "Private Clubs & Hotels", projects: "40+ Venues",
+    bio: "Marcus designs private members' clubs, hotel foyers, and high-art galleries across London, Singapore, and Dubai with discreet luxury."
+  },
+  {
+    name: "Kavya Reddy",
+    role: "Bespoke Textiles Director",
+    img: "designs/team_member_9.png",
+    exp: "9 Years", spec: "Italian Silks & Cashmere", projects: "60+ Furnished",
+    bio: "Kavya curates hand-woven Italian silks, Tuscan leather, and pure cashmere upholstery, ensuring tactile warmth in every private living zone."
+  },
+  {
+    name: "Isabelle Roux",
+    role: "Client Experience Director",
+    img: "designs/team_member_10.png",
+    exp: "14 Years", spec: "White-Glove Concierge", projects: "95+ Handovers",
+    bio: "Isabelle directs the white-glove commissioning process, coordinating private viewings, material sample boxes, and seamless move-in reveals."
+  }
+];
+
+let cylinderAngle = 0;
+let teamTween = null;
+let isCylinderHovered = false;
+
+function build3DTeamCylinder() {
+  const cyl = document.getElementById('teamCylinder');
+  if (!cyl) return;
+  cyl.innerHTML = '';
+
+  const total = teamMembersData.length;
+  const angleStep = 360 / total;
+  const screenWidth = window.innerWidth;
+  const radius = screenWidth < 480 ? 190 : (screenWidth < 768 ? 250 : (screenWidth < 1024 ? 350 : 480));
+
+  teamMembersData.forEach((m, i) => {
+    const cardAngle = i * angleStep;
+    const card = document.createElement('div');
+    card.className = 'team-3d-card';
+    card.dataset.angle = cardAngle;
+    card.dataset.index = i;
+
+    card.style.transform = `rotateY(${cardAngle}deg) translateZ(${radius}px)`;
+
+    card.innerHTML = `
+      <div class="team-card-inner">
+        <div class="team-avatar-wrap">
+          <img src="${m.img}" alt="${m.name}">
+        </div>
+        <div class="team-card-name">${m.name}</div>
+        <div class="team-card-role">${m.role}</div>
+        <div class="team-card-divider"></div>
+      </div>
+    `;
+
+    card.addEventListener('mouseenter', () => { isCylinderHovered = true; });
+    card.addEventListener('mouseleave', () => { isCylinderHovered = false; });
+    card.addEventListener('click', () => openTeamMemberModal(i));
+
+    cyl.appendChild(card);
+  });
+
+  updateCylinderDepthOptics();
+}
+
+function updateCylinderDepthOptics() {
+  const cyl = document.getElementById('teamCylinder');
+  if (!cyl) return;
+
+  const cards = cyl.querySelectorAll('.team-3d-card');
+  const screenWidth = window.innerWidth;
+  const radius = screenWidth < 480 ? 190 : (screenWidth < 768 ? 250 : (screenWidth < 1024 ? 350 : 480));
+
+  cards.forEach((card) => {
+    const baseAngle = parseFloat(card.dataset.angle);
+    // Correct world angle relative to front camera view
+    let netAngle = (baseAngle - cylinderAngle) % 360;
+    if (netAngle < 0) netAngle += 360;
+
+    let rad = (netAngle * Math.PI) / 180;
+    let cos = Math.cos(rad); // 1.0 when card is directly facing FRONT (0 deg), -1.0 when AT BACK (180 deg)
+
+    let norm = (cos + 1) / 2; // 1.0 at FRONT, 0.0 at BACK
+
+    // FRONT cards are 100% CRYSTAL CLEAR (0px blur, opacity 1.0, scale 1.0, zIndex 100)
+    // BACK cards are DEPTH BLURRED (8px blur, opacity 0.18, scale 0.70, zIndex 1)
+    let opacity = 0.18 + norm * 0.82;
+    let blur = (1 - norm) * 8;
+    let scale = 0.70 + norm * 0.30;
+    let zIndex = Math.round(norm * 100);
+
+    card.style.opacity = opacity.toFixed(2);
+    card.style.filter = `blur(${blur.toFixed(1)}px)`;
+    card.style.zIndex = zIndex;
+    card.style.transform = `rotateY(${baseAngle}deg) translateZ(${radius}px) scale(${scale.toFixed(2)})`;
+  });
+}
+
+function startCylinderRotation() {
+  if (teamTween) teamTween.kill();
+
+  const obj = { angle: cylinderAngle };
+  teamTween = gsap.to(obj, {
+    angle: cylinderAngle + 360,
+    duration: 32,
+    ease: 'none',
+    repeat: -1,
+    onUpdate: () => {
+      if (!isCylinderHovered) {
+        cylinderAngle = obj.angle % 360;
+        const cyl = document.getElementById('teamCylinder');
+        if (cyl) {
+          cyl.style.transform = `rotateY(${-cylinderAngle}deg)`;
+          updateCylinderDepthOptics();
+        }
+      }
+    }
+  });
+}
+
+function pauseCylinderRotation() {
+  if (teamTween) teamTween.pause();
+}
+
+function resumeCylinderRotation() {
+  if (teamTween) teamTween.resume();
+}
+
+function openTeamMemberModal(idx) {
+  const m = teamMembersData[idx];
+  if (!m) return;
+
+  document.getElementById('tmImg').src = m.img;
+  document.getElementById('tmName').textContent = m.name;
+  document.getElementById('tmRole').textContent = m.role;
+  document.getElementById('tmBio').textContent = m.bio;
+  document.getElementById('tmExp').textContent = m.exp;
+  document.getElementById('tmSpec').textContent = m.spec;
+  document.getElementById('tmProjects').textContent = m.projects;
+
+  document.getElementById('teamModal').classList.add('active');
+}
+
+function closeTeamModal() {
+  const modal = document.getElementById('teamModal');
+  if (modal) modal.classList.remove('active');
+}
+
+// Init 3D Team Cylinder & ScrollTrigger
+(function initTeamCylinder() {
+  build3DTeamCylinder();
+  window.addEventListener('resize', build3DTeamCylinder);
+
+  if (typeof ScrollTrigger !== 'undefined') {
+    ScrollTrigger.create({
+      trigger: '#team',
+      start: 'top 85%',
+      end: 'bottom 15%',
+      onEnter: () => {
+        startCylinderRotation();
+        gsap.from('#teamTitleMask', { opacity: 0, y: 30, duration: 1.2, ease: 'power3.out' });
+        gsap.from('#teamSubMask', { opacity: 0, y: 20, duration: 1.0, delay: 0.2, ease: 'power3.out' });
+      },
+      onLeave: () => pauseCylinderRotation(),
+      onEnterBack: () => resumeCylinderRotation(),
+      onLeaveBack: () => pauseCylinderRotation()
+    });
+  }
+})();
+
+/* ULTRA-AESTHETIC PROCESS SHOWCASE LOGIC */
+const processStagesData = [
+  {
+    step: "STAGE 01 / 05 \u2022 LIFESTYLE AUDIT",
+    title: "Studying How You Move, Light Patterns & Silence",
+    desc: "We study how you live, not just how you decorate — analyzing natural light diffusion across seasons, morning rituals, and acoustic preferences before drawing a single line.",
+    tags: ["Spatial Brief", "Acoustic Analysis", "Solar Angle Mapping"],
+    duration: "2 Weeks", output: "Master Spatial Brief",
+    img: "designs/room_before_renovation.png"
+  },
+  {
+    step: "STAGE 02 / 05 \u2022 CONCEPTUAL ARCHITECTURE",
+    title: "Spatial Narrative Grounded in Physical Materials",
+    desc: "A spatial narrative is drawn, grounded in physical travertine stone, hand-patinated brass alloys, and linen sample boards tested under ambient atelier lighting.",
+    tags: ["Material Palette", "Acoustic Millwork", "Custom Lighting Schematics"],
+    duration: "3 Weeks", output: "Material Specs & Floorplans",
+    img: "designs/luxury_house_interior-wallpaper-2560x1600.jpg"
+  },
+  {
+    step: "STAGE 03 / 05 \u2022 4K SPATIAL VISUALIZATION",
+    title: "Photorealistic 3D Volumetric Light Renderings",
+    desc: "Photorealistic 3D architectural renderings bring the spatial volume and lighting vividly into focus, allowing you to walk through every room virtually before crafting begins.",
+    tags: ["4K Photorealistic VR", "Lighting Diffusion Sims", "3D Material Mapping"],
+    duration: "4 Weeks", output: "Full 4K VR Render Suite",
+    img: "designs/photo-1590381105924-c72589b9ef3f.avif"
+  },
+  {
+    step: "STAGE 04 / 05 \u2022 ARTISANAL EXECUTION",
+    title: "European Master Craftsmen & Precision Crafting",
+    desc: "European master artisans and our site directors realize every single millimetre with meticulous precision — hand-laying marble, fitting fluted glass, and patinating brass trim.",
+    tags: ["On-Site Direction", "Quarry Provenance", "Custom Furniture Craft"],
+    duration: "12-16 Weeks", output: "Site Completion",
+    img: "designs/pexels-ranamatloob567-35203563.jpg"
+  },
+  {
+    step: "STAGE 05 / 05 \u2022 WHITE-GLOVE HANDOVER",
+    title: "Move-In Ready Reveal Styled to Perfection",
+    desc: "A fully styled, move-in ready reveal — tailored down to silk cushion placement, art curation, and smelling of cedar and fresh linen.",
+    tags: ["Art Curation", "Silk Drapery Styling", "Concierge Key Handover"],
+    duration: "1 Week", output: "Bespoke Residence Reveal",
+    img: "designs/room_after_renovation.png"
+  }
+];
+
+let activeProcessIdx = 0;
+
+function setProcessStage(idx) {
+  const d = processStagesData[idx];
+  if (!d) return;
+  activeProcessIdx = idx;
+
+  const items = document.querySelectorAll('.process-nav-item');
+  items.forEach((item, i) => item.classList.toggle('active', i === idx));
+
+  const imgEl = document.getElementById('pStageImg');
+  const stepEl = document.getElementById('pStageStep');
+  const titleEl = document.getElementById('pStageTitle');
+  const descEl = document.getElementById('pStageDesc');
+  const tagsEl = document.getElementById('pStageTags');
+  const durEl = document.getElementById('pStageDuration');
+  const outEl = document.getElementById('pStageOutput');
+
+  if (imgEl) {
+    gsap.to(imgEl, { opacity: 0.3, duration: 0.25, onComplete: () => {
+      imgEl.src = d.img;
+      gsap.to(imgEl, { opacity: 1, duration: 0.35 });
+    }});
+  }
+
+  if (stepEl) stepEl.textContent = d.step;
+  if (titleEl) titleEl.textContent = d.title;
+  if (descEl) descEl.textContent = d.desc;
+  if (durEl) durEl.textContent = d.duration;
+  if (outEl) outEl.textContent = d.output;
+
+  if (tagsEl) {
+    tagsEl.innerHTML = d.tags.map(t => `<span class="p-tag">${t}</span>`).join('');
+  }
+}
+
+
+
+</script>
+</body>
+</html>
